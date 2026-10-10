@@ -110,13 +110,15 @@
   function renderRecordSlide(item, sex) {
     const sexName = sex === 'female' ? 'FEMALE' : 'MALE';
     const sexColor = sex === 'female' ? 'female' : 'male';
+    if (sex === 'male' && item.limit === male[0]?.limit) {
+      return renderPodiumPreview(item);
+    }
     return `
       <div class="hero">
         <div class="hero-grid"></div>
         <div class="hero-inner">
           <div class="title-row">
             <div>
-              <div class="kicker">D’DIAL FITNESS CLUB · ${sexName} RECORDS</div>
               <div class="huge-title"><span class="accent">${sexName}</span><br>DIVISION</div>
             </div>
             <div class="title-meta">
@@ -137,11 +139,50 @@
       </div>`;
   }
 
+  const silhouette = `<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="29" r="18" fill="currentColor"/><path d="M15 91c2-24 15-37 35-37s33 13 35 37Z" fill="currentColor"/></svg>`;
+  const crown = `<svg viewBox="0 0 100 68" aria-hidden="true" focusable="false"><path d="M8 17 29 37 50 7 71 37 92 17 83 58H17Z" fill="currentColor"/><circle cx="8" cy="12" r="5" fill="currentColor"/><circle cx="50" cy="6" r="5" fill="currentColor"/><circle cx="92" cy="12" r="5" fill="currentColor"/></svg>`;
+
+  function podiumCard(rank, metal) {
+    return `<div class="podium-card rank-${rank} ${metal}">
+      ${rank === 1 ? `<div class="podium-crown">${crown}</div>` : ''}
+      <div class="podium-rank">${rank}</div>
+      <div class="podium-avatar">${silhouette}</div>
+      <div class="podium-name">NAME</div>
+      <div class="podium-score" aria-label="Score placeholder"></div>
+    </div>`;
+  }
+
+  function renderPodiumPreview(item) {
+    const lowerRanks = [4, 5, 6, 7, 8, 9, 10].map(rank => `
+      <div class="podium-row"><span class="podium-row-rank">${rank}</span>
+        <span class="podium-row-avatar">${silhouette}</span>
+        <span class="podium-row-name">NAME</span>
+        <span class="podium-row-score" aria-label="Score placeholder"></span>
+      </div>`).join('');
+
+    return `<div class="podium-scene">
+      <div class="podium-spotlight spotlight-left"></div>
+      <div class="podium-spotlight spotlight-center"></div>
+      <div class="podium-spotlight spotlight-right"></div>
+      <div class="podium-plate plates-left" aria-hidden="true"></div>
+      <div class="podium-plate plates-right" aria-hidden="true"></div>
+      <div class="podium-logo" role="img" aria-label="D’Dial Fitness Club"></div>
+      <h1 class="podium-title">MEN <span>/</span> ${esc(item.division)}</h1>
+      <div class="podium-display" aria-label="Top three design placeholders">
+        ${podiumCard(2, 'silver')}${podiumCard(1, 'gold')}${podiumCard(3, 'bronze')}
+      </div>
+      <div class="podium-base" aria-hidden="true"></div>
+      <div class="podium-lower" aria-label="Ranks four through ten design placeholders">${lowerRanks}</div>
+      <span class="podium-preview-label">DESIGN PREVIEW</span>
+    </div>`;
+  }
+
   function buildSlideData() {
     stage.innerHTML = '';
     slides.forEach((s, index) => {
       const node = document.createElement('section');
-      node.className = `slide${index === current ? ' active' : ''}`;
+      const isPodium = s.type === 'record' && s.sex === 'male' && s.record.limit === male[0]?.limit;
+      node.className = `slide${index === current ? ' active' : ''}${isPodium ? ' podium-slide' : ''}`;
       node.dataset.index = index;
       if (s.type === 'overview') {
         node.innerHTML = renderOverview(s.sex);
@@ -170,6 +211,7 @@
 
   function updateLabels() {
     const s = slides[current];
+    document.body.classList.toggle('podium-mode', s.type === 'record' && s.sex === 'male' && s.record.limit === male[0]?.limit);
     if (s.type === 'overview') slideLabel.textContent = 'ALL DIVISIONS';
     else slideLabel.textContent = `${s.sex.toUpperCase()} · ${s.record.division}`;
   }
@@ -198,7 +240,7 @@
 
   function updateClock() {
     const now = new Date();
-    clock.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+    clock.textContent = now.toLocaleTimeString('en-TT', { hour: 'numeric', minute: '2-digit', hour12: true });
   }
 
   document.getElementById('prevBtn').addEventListener('click', () => animateTo(current - 1, -1));
@@ -233,3 +275,4 @@
   updateClock();
   setInterval(updateClock, 1000);
 })();
+
