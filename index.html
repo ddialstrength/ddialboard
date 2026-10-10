@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050507">
+  <meta name="description" content="D’Dial Fitness Club Record Board — strength records by sex, weight division and lift.">
+  <title>D’Dial Fitness Club — Record Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-gold"></div>
+  <div class="ambient ambient-blue"></div>
+  <div class="scanlines"></div>
+
+  <header class="topbar">
+    <div class="brand-lockup">
+      <img src="assets/logo.png" alt="D’Dial Fitness Club" class="brand-logo">
+      <div class="brand-copy">
+        <div class="eyebrow">OFFICIAL STRENGTH RECORDS</div>
+        <div class="brand-title">D’DIAL <span>FITNESS CLUB</span></div>
+      </div>
+    </div>
+
+    <div class="status-cluster">
+      <div class="live-pill"><span class="live-dot"></span> LIVE BOARD</div>
+      <div class="clock" id="clock">--:--</div>
+    </div>
+  </header>
+
+  <main class="board-shell">
+    <section id="slideStage" class="slide-stage" aria-live="polite"></section>
+  </main>
+
+  <footer class="footer-bar">
+    <div class="footer-left">
+      <span id="slideLabel">ALL DIVISIONS</span>
+      <span class="footer-separator">•</span>
+      <span>BENCH PRESS · SQUAT · DEADLIFT</span>
+    </div>
+    <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+  </footer>
+
+  <div class="control-panel" id="controls" aria-label="Record board controls">
+    <button class="control-btn" id="prevBtn" title="Previous slide">‹</button>
+    <button class="control-btn control-main" id="pauseBtn" title="Pause rotation">Ⅱ</button>
+    <button class="control-btn" id="nextBtn" title="Next slide">›</button>
+    <button class="control-btn" id="fullscreenBtn" title="Fullscreen">⛶</button>
+  </div>
+
+  <script src="assets/records.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
