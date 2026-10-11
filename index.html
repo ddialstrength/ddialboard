@@ -12,6 +12,10 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <video id="arenaVideo" class="arena-video" autoplay muted loop playsinline preload="metadata" poster="assets/ddial-arena-poster.jpg" aria-hidden="true" tabindex="-1">
+    <source src="assets/ddial-arena-background-720p.webm" type="video/webm">
+    <source src="assets/ddial-arena-background-720p.mp4" type="video/mp4">
+  </video>
   <header class="topbar">
     <div class="metal-logo" role="img" aria-label="D’Dial Fitness Club logo"></div>
     <h1 id="slideTitle">WOMEN · UNDER 120 LB</h1>
@@ -21,7 +25,7 @@
   <footer class="footer-bar"><span id="slideLabel">DEMO DATA · 1 / 10</span><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></footer>
   <div class="control-panel" id="controls" aria-label="Leaderboard controls">
     <button class="control-btn" id="prevBtn" title="Previous slide" aria-label="Previous slide">‹</button>
-    <button class="control-btn" id="pauseBtn" title="Pause rotation" aria-label="Pause rotation">Ⅱ</button>
+    <button class="control-btn" id="pauseBtn" title="Pause playback" aria-label="Pause playback">Ⅱ</button>
     <button class="control-btn" id="nextBtn" title="Next slide" aria-label="Next slide">›</button>
     <button class="control-btn" id="fullscreenBtn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
   </div>

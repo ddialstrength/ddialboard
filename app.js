@@ -6,6 +6,8 @@
   const clock = document.getElementById('clock');
   const pauseBtn = document.getElementById('pauseBtn');
   const controls = document.getElementById('controls');
+  const arenaVideo = document.getElementById('arenaVideo');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const lifts = [
     { key: 'bench', title: 'BENCH PRESS' },
     { key: 'squat', title: 'SQUAT' },
@@ -127,10 +129,32 @@
   function setPaused(next) {
     paused = next;
     pauseBtn.textContent = paused ? '▶' : 'Ⅱ';
-    pauseBtn.title = paused ? 'Resume rotation' : 'Pause rotation';
+    pauseBtn.title = paused ? 'Resume playback' : 'Pause playback';
+    pauseBtn.setAttribute('aria-label', pauseBtn.title);
     startedAt = Date.now();
     schedule();
+    syncArenaPlayback();
   }
+
+  function syncArenaPlayback() {
+    if (paused || reducedMotion.matches || document.hidden) {
+      arenaVideo.pause();
+      return;
+    }
+    arenaVideo.play().catch(() => {
+      // Keep the poster visible when the browser cannot start playback.
+      arenaVideo.classList.remove('is-playing');
+    });
+  }
+
+  arenaVideo.addEventListener('playing', () => {
+    if (paused || reducedMotion.matches || document.hidden) arenaVideo.pause();
+    else arenaVideo.classList.add('is-playing');
+  });
+  arenaVideo.addEventListener('error', () => arenaVideo.classList.remove('is-playing'));
+  reducedMotion.addEventListener('change', syncArenaPlayback);
+  document.addEventListener('visibilitychange', syncArenaPlayback);
+  syncArenaPlayback();
 
   function updateClock() {
     clock.textContent = new Date().toLocaleTimeString('en-TT', {
