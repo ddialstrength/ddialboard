@@ -6,11 +6,6 @@
   const clock = document.getElementById('clock');
   const pauseBtn = document.getElementById('pauseBtn');
   const controls = document.getElementById('controls');
-  const arenaVideo = document.getElementById('arenaVideo');
-  const sparksVideo = document.getElementById('sparksVideo');
-  const backgroundVideos = [arenaVideo, sparksVideo];
-  sparksVideo.playbackRate = .75;
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const lifts = [
     { key: 'bench', title: 'BENCH PRESS' },
     { key: 'squat', title: 'SQUAT' },
@@ -104,6 +99,7 @@
 
   function updateLabels() {
     const title = titleFor(slides[current]);
+    document.body.dataset.sex = slides[current].type === 'division' ? slides[current].item.sex : slides[current].sex;
     const heading = document.getElementById('slideTitle');
     heading.textContent = title;
     heading.classList.remove('title-enter');
@@ -132,36 +128,10 @@
   function setPaused(next) {
     paused = next;
     pauseBtn.textContent = paused ? '▶' : 'Ⅱ';
-    pauseBtn.title = paused ? 'Resume playback' : 'Pause playback';
-    pauseBtn.setAttribute('aria-label', pauseBtn.title);
+    pauseBtn.title = paused ? 'Resume rotation' : 'Pause rotation';
     startedAt = Date.now();
     schedule();
-    syncArenaPlayback();
   }
-
-  function syncArenaPlayback() {
-    backgroundVideos.forEach(video => {
-      if (paused || reducedMotion.matches || document.hidden) {
-        video.pause();
-        return;
-      }
-      video.play().catch(() => {
-        // Keep the arena poster visible and hide unavailable effects.
-        video.classList.remove('is-playing');
-      });
-    });
-  }
-
-  backgroundVideos.forEach(video => {
-    video.addEventListener('playing', () => {
-      if (paused || reducedMotion.matches || document.hidden) video.pause();
-      else video.classList.add('is-playing');
-    });
-    video.addEventListener('error', () => video.classList.remove('is-playing'));
-  });
-  reducedMotion.addEventListener('change', syncArenaPlayback);
-  document.addEventListener('visibilitychange', syncArenaPlayback);
-  syncArenaPlayback();
 
   function updateClock() {
     clock.textContent = new Date().toLocaleTimeString('en-TT', {
