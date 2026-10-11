@@ -1,23 +1,13 @@
-# D’Dial Fitness Club — Record Board
+# D’Dial leaderboard design preview
 
-Responsive static website for displaying gym records on phones, tablets, laptops, PCs and 32–64" TVs.
+Open `index.html` in a browser. This preview contains 10 slides: four women’s divisions, four men’s divisions, and one exercise leaderboard for each sex. It runs from local files without a server. Pause and use the arrows at the bottom right to inspect each slide.
 
-## Display sequence
-1. Overview screen: shows all weight divisions and the current record holders for Bench Press, Squat and Deadlift.
-2. After 30 seconds, the board slides into Female divisions, one division per slide.
-3. It then cycles through Male divisions, one division per slide.
-4. The loop returns to the overview and repeats automatically.
+## Update the demo athletes
 
-## Editing the records
-Open `assets/records.js` and edit the `records` array. Each row contains:
-- `sex`: `female` or `male`
-- `division`: weight class label
-- `limit`: numeric upper limit for sorting
-- `bench`, `squat`, `deadlift`: `{ name, weight, date }`
+Edit `assets/records.js`. Each division has ten `athletes`. For each athlete, edit `name`, `bench`, `squat`, and `deadlift`. All weights are personal records in **pounds**. The browser calculates `total = bench + squat + deadlift`, sorts the division by total, and lists the ten highest lifts for each exercise across that sex’s four divisions. Equal totals or lifts are sorted alphabetically by name.
 
-The current entries are sample/demo records so the layout can be previewed immediately.
+`photo` is optional. To add a portrait, put a PNG, JPEG, or WebP image in `assets/athletes/` and set `photo: "assets/athletes/filename.jpg"`. Empty photo fields show a silhouette. Replace the demo names and numbers with checked results before any public deployment. The visible `DEMO DATA` label marks this version as a preview.
 
-## Running
-This is a plain static site. Open `index.html` directly or serve the folder from any web server.
+The weight class labels are editable in the same file. For this preview they use round pound boundaries: women under 120, 120–154, 155–187, 188+; men under 150, 150–187, 188–220, 221+. Confirm class boundaries before using real results.
 
-For a TV, open the site in the browser and use **Fullscreen**. Auto-rotation runs every 30 seconds.
+The blurred gym background is derived from the reference poster supplied for this project. The header logo uses the existing metallic DFC mask.

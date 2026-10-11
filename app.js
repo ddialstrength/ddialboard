@@ -1,278 +1,164 @@
 (() => {
-  const INTERVAL_MS = 10_000;
+  const INTERVAL_MS = 20_000;
   const stage = document.getElementById('slideStage');
   const slideLabel = document.getElementById('slideLabel');
   const progressBar = document.getElementById('progressBar');
   const clock = document.getElementById('clock');
   const pauseBtn = document.getElementById('pauseBtn');
   const controls = document.getElementById('controls');
-
-  const female = records.filter(r => r.sex === 'female').sort((a, b) => a.limit - b.limit);
-  const male = records.filter(r => r.sex === 'male').sort((a, b) => a.limit - b.limit);
-  const all = [...female, ...male];
-
-  const slides = [];
-
-  slides.push({ type: 'overview', sex: 'female' });
-
-  female.forEach(r => {
-    slides.push({
-      type: 'record',
-      sex: 'female',
-      record: r
-    });
-  });
-
-  slides.push({ type: 'overview', sex: 'male' });
-
-  male.forEach(r => {
-    slides.push({
-      type: 'record',
-      sex: 'male',
-      record: r
-    });
-  });
-
+  const lifts = [
+    { key: 'bench', title: 'BENCH PRESS' },
+    { key: 'squat', title: 'SQUAT' },
+    { key: 'deadlift', title: 'DEADLIFT' }
+  ];
+  const slides = [
+    ...records.filter(item => item.sex === 'female').map(item => ({ type: 'division', item })),
+    ...records.filter(item => item.sex === 'male').map(item => ({ type: 'division', item })),
+    { type: 'exercise', sex: 'female' },
+    { type: 'exercise', sex: 'male' }
+  ];
   let current = 0;
-  let timer = null;
-  let elapsedTimer = null;
+  let timer;
+  let ticker;
   let paused = false;
   let startedAt = Date.now();
 
-  const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c]));
-  const fmt = n => Number.isInteger(n) ? n.toString() : Number(n).toFixed(1);
-  const chip = sex => `<span class="sex-chip"><span class="sex-dot ${sex}"></span>${sex}</span>`;
-  const holder = item => item
-    ? `<div class="holder"><span class="name">${esc(item.name)}</span><span class="lift">${esc(fmt(item.weight))} kg</span></div>`
-    : '<span class="empty">—</span>';
+  const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[char]));
+  const pounds = value => `${Number(value).toLocaleString('en-US')} LB`;
+  const total = athlete => Number(athlete.bench) + Number(athlete.squat) + Number(athlete.deadlift);
+  const label = sex => sex === 'male' ? 'MEN' : 'WOMEN';
+  const avatar = `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="29" r="18" fill="currentColor"/><path d="M15 92c2-25 15-38 35-38s33 13 35 38Z" fill="currentColor"/></svg>`;
+  const crown = `<svg viewBox="0 0 100 65" aria-hidden="true"><path d="M8 17 29 37 50 7 71 37 92 17 83 58H17Z" fill="currentColor"/><circle cx="8" cy="12" r="5" fill="currentColor"/><circle cx="50" cy="6" r="5" fill="currentColor"/><circle cx="92" cy="12" r="5" fill="currentColor"/></svg>`;
 
-  function renderOverview(sex) {
-    const data = sex === 'female' ? female : male;
-
-    const rows = data.map(r => `
-    <tr>
-      <td class="division">${esc(r.division)}</td>
-        <td>${holder(r.bench)}</td>
-        <td>${holder(r.squat)}</td>
-        <td>${holder(r.deadlift)}</td>
-      </tr>`).join('');
-
-    return `
-      <div class="hero overview">
-        <div class="hero-grid"></div>
-        <div class="hero-inner">
-          <div class="title-row">
-            <div>
-              <div class="kicker">D’DIAL FITNESS CLUB · OFFICIAL RECORD BOARD</div>
-              <div class="huge-title"><span class="accent">RECORD</span><br>BOARD</div>
-            </div>
-            <div class="title-meta">
-              <div class="sex-label">${sex}·${data.length} WEIGHT DIVISIONS</div>
-            </div>
-          </div>
-          <div class="overview-head" aria-hidden="true">
-            <div>Weight Division / Record Holder</div>
-            <div>Bench Press</div>
-            <div>Squat</div>
-            <div>Deadlift</div>
-          </div>
-          <div class="table-wrap">
-            <table class="record-table">
-              <thead>
-                <tr>
-                  <th>Division</th><th>Bench Press</th><th>Squat</th><th>Deadlift</th>
-                </tr>
-              </thead>
-              <tbody>${rows}</tbody>
-            </table>
-          </div>
-          <div class="section-caption">
-            <span><strong>Auto rotation</strong> · detailed division slides every 10 seconds</span>
-            <span>All records shown in kilograms</span>
-          </div>
-        </div>
-      </div>`;
+  function portrait(athlete) {
+    // Only relative, local image paths are supported, so the preview works offline.
+    const path = athlete.photo || '';
+    return /^assets\/athletes\/[a-zA-Z0-9._/-]+\.(png|jpe?g|webp)$/i.test(path)
+      ? `<img src="${escapeHTML(path)}" alt="Portrait of ${escapeHTML(athlete.name)}">`
+      : avatar;
   }
 
-  function liftCard(label, icon, item) {
-    return `
-      <article class="lift-card">
-        <div>
-          <div class="card-top"><div class="lift-label">${label}</div><div class="lift-icon">${icon}</div></div>
-          <div class="record-number">${fmt(item.weight)}<span class="unit">KG</span></div>
-          <div class="record-name">${esc(item.name)}</div>
-          <div class="record-meta">Record set · ${esc(item.date || '—')}</div>
-        </div>
-        <div class="record-bar"></div>
-      </article>`;
+  function card(athlete, rank) {
+    const metal = ['gold', 'silver', 'bronze'][rank - 1];
+    return `<article class="winner winner-${rank} ${metal}">
+      ${rank === 1 ? `<div class="crown">${crown}</div>` : ''}
+      <div class="winner-rank">${rank}</div>
+      <div class="winner-portrait">${portrait(athlete)}</div>
+      <h2>${escapeHTML(athlete.name)}</h2>
+      <div class="winner-total">${pounds(total(athlete))}</div>
+      <div class="winner-lifts">BP ${pounds(athlete.bench)} · SQ ${pounds(athlete.squat)} · DL ${pounds(athlete.deadlift)}</div>
+    </article>`;
   }
 
-  function renderRecordSlide(item, sex) {
-    const sexName = sex === 'female' ? 'FEMALE' : 'MALE';
-    const sexColor = sex === 'female' ? 'female' : 'male';
-    if (sex === 'male' && item.limit === male[0]?.limit) {
-      return renderPodiumPreview(item);
-    }
-    return `
-      <div class="hero">
-        <div class="hero-grid"></div>
-        <div class="hero-inner">
-          <div class="title-row">
-            <div>
-              <div class="huge-title"><span class="accent">${sexName}</span><br>DIVISION</div>
-            </div>
-            <div class="title-meta">
-              <div class="class-label">${esc(item.division)}</div>
-              <div class="sex-label"><span class="sex-chip"><span class="sex-dot ${sexColor}"></span>${sexName}</span> bodyweight class</div>
-            </div>
-          </div>
-          <div class="record-grid">
-            ${liftCard('Bench Press', 'BP', item.bench)}
-            ${liftCard('Squat', 'SQ', item.squat)}
-            ${liftCard('Deadlift', 'DL', item.deadlift)}
-          </div>
-          <div class="section-caption">
-            <span><strong>Division record</strong> · current best lift on the board</span>
-            <span>Presented by D’Dial Fitness Club</span>
-          </div>
-        </div>
-      </div>`;
+  function smallRank(athlete, rank) {
+    return `<div class="rank-row"><span class="rank-number">${rank}</span><span class="rank-name">${escapeHTML(athlete.name)}</span><strong>${pounds(total(athlete))}</strong></div>`;
   }
 
-  const silhouette = `<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="29" r="18" fill="currentColor"/><path d="M15 91c2-24 15-37 35-37s33 13 35 37Z" fill="currentColor"/></svg>`;
-  const crown = `<svg viewBox="0 0 100 68" aria-hidden="true" focusable="false"><path d="M8 17 29 37 50 7 71 37 92 17 83 58H17Z" fill="currentColor"/><circle cx="8" cy="12" r="5" fill="currentColor"/><circle cx="50" cy="6" r="5" fill="currentColor"/><circle cx="92" cy="12" r="5" fill="currentColor"/></svg>`;
-
-  function podiumCard(rank, metal) {
-    return `<div class="podium-card rank-${rank} ${metal}">
-      ${rank === 1 ? `<div class="podium-crown">${crown}</div>` : ''}
-      <div class="podium-rank">${rank}</div>
-      <div class="podium-avatar">${silhouette}</div>
-      <div class="podium-name">NAME</div>
-      <div class="podium-score" aria-label="Score placeholder"></div>
-    </div>`;
-  }
-
-  function renderPodiumPreview(item) {
-    const lowerRanks = [4, 5, 6, 7, 8, 9, 10].map(rank => `
-      <div class="podium-row"><span class="podium-row-rank">${rank}</span>
-        <span class="podium-row-avatar">${silhouette}</span>
-        <span class="podium-row-name">NAME</span>
-        <span class="podium-row-score" aria-label="Score placeholder"></span>
-      </div>`).join('');
-
-    return `<div class="podium-scene">
-      <div class="podium-spotlight spotlight-left"></div>
-      <div class="podium-spotlight spotlight-center"></div>
-      <div class="podium-spotlight spotlight-right"></div>
-      <div class="podium-plate plates-left" aria-hidden="true"></div>
-      <div class="podium-plate plates-right" aria-hidden="true"></div>
-      <div class="podium-logo" role="img" aria-label="D’Dial Fitness Club"></div>
-      <h1 class="podium-title">MEN <span>/</span> ${esc(item.division)}</h1>
-      <div class="podium-display" aria-label="Top three design placeholders">
-        ${podiumCard(2, 'silver')}${podiumCard(1, 'gold')}${podiumCard(3, 'bronze')}
+  function renderDivision(item) {
+    const sorted = [...item.athletes].sort((a, b) => total(b) - total(a) || a.name.localeCompare(b.name));
+    const remainder = sorted.slice(3);
+    return `<div class="scene division-scene">
+      <div class="top-three" aria-label="Top three ranked by combined lift total">
+        ${card(sorted[1], 2)}${card(sorted[0], 1)}${card(sorted[2], 3)}
       </div>
-      <div class="podium-base" aria-hidden="true"></div>
-      <div class="podium-lower" aria-label="Ranks four through ten design placeholders">${lowerRanks}</div>
-      <span class="podium-preview-label">DESIGN PREVIEW</span>
+      <div class="fourth-rank">${smallRank(remainder[0], 4)}</div>
+      <div class="rank-columns">
+        <div class="rank-column">${remainder.slice(1, 4).map((athlete, index) => smallRank(athlete, index + 5)).join('')}</div>
+        <div class="rank-column">${remainder.slice(4).map((athlete, index) => smallRank(athlete, index + 8)).join('')}</div>
+      </div>
+      <div class="scoring-note">TOTAL = BENCH + SQUAT + DEADLIFT · LB</div>
     </div>`;
   }
 
-  function buildSlideData() {
-    stage.innerHTML = '';
-    slides.forEach((s, index) => {
-      const node = document.createElement('section');
-      const isPodium = s.type === 'record' && s.sex === 'male' && s.record.limit === male[0]?.limit;
-      node.className = `slide${index === current ? ' active' : ''}${isPodium ? ' podium-slide' : ''}`;
-      node.dataset.index = index;
-      if (s.type === 'overview') {
-        node.innerHTML = renderOverview(s.sex);
-      } else {
-        node.innerHTML = renderRecordSlide(s.record, s.sex);
-      }
-      stage.appendChild(node);
-    });
-    updateLabels();
+  function renderExercise(sex) {
+    const people = records.filter(item => item.sex === sex).flatMap(item =>
+      item.athletes.map(athlete => ({ ...athlete, division: item.division }))
+    );
+    const tables = lifts.map(lift => {
+      const leaders = [...people].sort((a, b) => b[lift.key] - a[lift.key] || a.name.localeCompare(b.name)).slice(0, 10);
+      return `<section class="exercise-table"><h2>${lift.title}</h2><table>
+        <thead><tr><th>#</th><th>NAME</th><th>CLASS</th><th>PR</th></tr></thead>
+        <tbody>${leaders.map((person, index) => `<tr><td>${index + 1}</td><td>${escapeHTML(person.name)}</td><td>${escapeHTML(person.division)}</td><td>${pounds(person[lift.key])}</td></tr>`).join('')}</tbody>
+      </table></section>`;
+    }).join('');
+    return `<div class="scene exercise-scene"><div class="exercise-grid">${tables}</div><div class="scoring-note">TOP 10 PERSONAL RECORDS PER EXERCISE · LB</div></div>`;
   }
 
-  function animateTo(index, direction = 1) {
-    const nodes = [...stage.querySelectorAll('.slide')];
-    if (!nodes.length) return;
-    const prev = current;
-    current = (index + nodes.length) % nodes.length;
-    nodes.forEach((node, i) => {
-      node.classList.remove('active', 'exit');
-      if (i === prev && i !== current) node.classList.add('exit');
-    });
-    requestAnimationFrame(() => nodes[current].classList.add('active'));
+  function titleFor(slide) {
+    return slide.type === 'division'
+      ? `${label(slide.item.sex)} · ${slide.item.division.toUpperCase()}`
+      : `${label(slide.sex)} · EXERCISE CLASS`;
+  }
+
+  function buildSlides() {
+    stage.innerHTML = slides.map((slide, index) => `<section class="slide${index === 0 ? ' active' : ''}" aria-label="${escapeHTML(titleFor(slide))}" ${index === 0 ? '' : 'aria-hidden="true"'}>${slide.type === 'division' ? renderDivision(slide.item) : renderExercise(slide.sex)}</section>`).join('');
     updateLabels();
-    startedAt = Date.now();
-    if (direction !== 0 && !paused) schedule();
   }
 
   function updateLabels() {
-    const s = slides[current];
-    document.body.classList.toggle('podium-mode', s.type === 'record' && s.sex === 'male' && s.record.limit === male[0]?.limit);
-    if (s.type === 'overview') slideLabel.textContent = 'ALL DIVISIONS';
-    else slideLabel.textContent = `${s.sex.toUpperCase()} · ${s.record.division}`;
+    const title = titleFor(slides[current]);
+    document.getElementById('slideTitle').textContent = title;
+    slideLabel.textContent = `DEMO DATA · ${current + 1} / ${slides.length}`;
   }
 
   function schedule() {
     clearTimeout(timer);
-    timer = setTimeout(() => animateTo(current + 1, 1), INTERVAL_MS);
+    if (!paused) timer = setTimeout(() => goTo(current + 1), INTERVAL_MS);
+  }
+
+  function goTo(index) {
+    const nodes = [...stage.querySelectorAll('.slide')];
+    nodes[current].classList.remove('active');
+    nodes[current].setAttribute('aria-hidden', 'true');
+    current = (index + nodes.length) % nodes.length;
+    nodes[current].classList.add('active');
+    nodes[current].removeAttribute('aria-hidden');
+    updateLabels();
+    startedAt = Date.now();
+    schedule();
   }
 
   function setPaused(next) {
     paused = next;
     pauseBtn.textContent = paused ? '▶' : 'Ⅱ';
     pauseBtn.title = paused ? 'Resume rotation' : 'Pause rotation';
-    if (paused) clearTimeout(timer);
-    else { startedAt = Date.now(); schedule(); }
-  }
-
-  function startProgressTicker() {
-    clearInterval(elapsedTimer);
-    elapsedTimer = setInterval(() => {
-      const elapsed = paused ? 0 : Math.min(INTERVAL_MS, Date.now() - startedAt);
-      const p = paused ? 0 : elapsed / INTERVAL_MS;
-      progressBar.style.transform = `scaleX(${p})`;
-    }, 80);
+    startedAt = Date.now();
+    schedule();
   }
 
   function updateClock() {
-    const now = new Date();
-    clock.textContent = now.toLocaleTimeString('en-TT', { hour: 'numeric', minute: '2-digit', hour12: true });
+    clock.textContent = new Date().toLocaleTimeString('en-TT', {
+      timeZone: 'America/Port_of_Spain', hour: 'numeric', minute: '2-digit', hour12: true
+    });
   }
 
-  document.getElementById('prevBtn').addEventListener('click', () => animateTo(current - 1, -1));
-  document.getElementById('nextBtn').addEventListener('click', () => animateTo(current + 1, 1));
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
   pauseBtn.addEventListener('click', () => setPaused(!paused));
   document.getElementById('fullscreenBtn').addEventListener('click', async () => {
     try {
-      if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
-      else await document.exitFullscreen();
-    } catch (_) { }
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else await document.documentElement.requestFullscreen();
+    } catch (_) { /* Browsers may deny fullscreen from a local file. */ }
   });
-
-  window.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight') animateTo(current + 1, 1);
-    if (e.key === 'ArrowLeft') animateTo(current - 1, -1);
-    if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); setPaused(!paused); }
-    if (e.key.toLowerCase() === 'f') document.getElementById('fullscreenBtn').click();
+  window.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight') goTo(current + 1);
+    if (event.key === 'ArrowLeft') goTo(current - 1);
+    if (event.code === 'Space') { event.preventDefault(); setPaused(!paused); }
   });
-
-  // Keep controls unobtrusive on TV displays.
   let hideTimer;
-  const wakeControls = () => {
+  ['mousemove', 'touchstart', 'keydown'].forEach(type => window.addEventListener(type, () => {
     controls.style.opacity = '1';
     clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => controls.style.opacity = '.20', 1800);
-  };
-  ['mousemove', 'touchstart', 'keydown'].forEach(evt => window.addEventListener(evt, wakeControls, { passive: true }));
-
-  buildSlideData();
-  schedule();
-  startProgressTicker();
+    hideTimer = setTimeout(() => { controls.style.opacity = ''; }, 1800);
+  }, { passive: true }));
+  buildSlides();
   updateClock();
-  setInterval(updateClock, 1000);
+  setInterval(updateClock, 30_000);
+  ticker = setInterval(() => {
+    progressBar.style.transform = `scaleX(${paused ? 0 : Math.min(1, (Date.now() - startedAt) / INTERVAL_MS)})`;
+  }, 100);
+  schedule();
 })();
-
