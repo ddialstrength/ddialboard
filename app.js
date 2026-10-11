@@ -7,6 +7,9 @@
   const pauseBtn = document.getElementById('pauseBtn');
   const controls = document.getElementById('controls');
   const arenaVideo = document.getElementById('arenaVideo');
+  const sparksVideo = document.getElementById('sparksVideo');
+  const backgroundVideos = [arenaVideo, sparksVideo];
+  sparksVideo.playbackRate = .75;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const lifts = [
     { key: 'bench', title: 'BENCH PRESS' },
@@ -137,21 +140,25 @@
   }
 
   function syncArenaPlayback() {
-    if (paused || reducedMotion.matches || document.hidden) {
-      arenaVideo.pause();
-      return;
-    }
-    arenaVideo.play().catch(() => {
-      // Keep the poster visible when the browser cannot start playback.
-      arenaVideo.classList.remove('is-playing');
+    backgroundVideos.forEach(video => {
+      if (paused || reducedMotion.matches || document.hidden) {
+        video.pause();
+        return;
+      }
+      video.play().catch(() => {
+        // Keep the arena poster visible and hide unavailable effects.
+        video.classList.remove('is-playing');
+      });
     });
   }
 
-  arenaVideo.addEventListener('playing', () => {
-    if (paused || reducedMotion.matches || document.hidden) arenaVideo.pause();
-    else arenaVideo.classList.add('is-playing');
+  backgroundVideos.forEach(video => {
+    video.addEventListener('playing', () => {
+      if (paused || reducedMotion.matches || document.hidden) video.pause();
+      else video.classList.add('is-playing');
+    });
+    video.addEventListener('error', () => video.classList.remove('is-playing'));
   });
-  arenaVideo.addEventListener('error', () => arenaVideo.classList.remove('is-playing'));
   reducedMotion.addEventListener('change', syncArenaPlayback);
   document.addEventListener('visibilitychange', syncArenaPlayback);
   syncArenaPlayback();
