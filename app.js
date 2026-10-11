@@ -53,7 +53,7 @@
   }
 
   function smallRank(athlete, rank) {
-    return `<div class="rank-row"><span class="rank-number">${rank}</span><span class="rank-name">${escapeHTML(athlete.name)}</span><strong>${pounds(total(athlete))}</strong></div>`;
+    return `<div class="rank-row" style="--rank-step:${rank - 4}"><span class="rank-number">${rank}</span><span class="rank-name">${escapeHTML(athlete.name)}</span><strong>${pounds(total(athlete))}</strong></div>`;
   }
 
   function renderDivision(item) {
@@ -99,7 +99,11 @@
 
   function updateLabels() {
     const title = titleFor(slides[current]);
-    document.getElementById('slideTitle').textContent = title;
+    const heading = document.getElementById('slideTitle');
+    heading.textContent = title;
+    heading.classList.remove('title-enter');
+    void heading.offsetWidth;
+    heading.classList.add('title-enter');
     slideLabel.textContent = `DEMO DATA · ${current + 1} / ${slides.length}`;
   }
 
