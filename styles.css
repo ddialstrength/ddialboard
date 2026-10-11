@@ -10,24 +10,15 @@
 * { box-sizing: border-box; }
 html, body { min-height: 100%; }
 body {
-  isolation: isolate;
   margin: 0; overflow: hidden; color: var(--text); font-family: var(--ui);
-  background: #08090b url("assets/ddial-arena-poster.jpg") center / cover fixed no-repeat;
+  background: #08090b url("assets/arena-background.webp") center / cover fixed no-repeat;
 }
-.arena-video, .sparks-video {
-  position: fixed; inset: 0; z-index: 0;
-  width: 100%; height: 100%; object-fit: cover; object-position: center;
-  pointer-events: none; opacity: 0;
-}
-.arena-video.is-playing { opacity: 1; }
-.sparks-video { z-index: 1; mix-blend-mode: screen; filter: saturate(.7); }
-.sparks-video.is-playing { opacity: .20; }
 body::before {
-  content: ""; position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  content: ""; position: fixed; inset: 0; pointer-events: none;
   background: linear-gradient(180deg, rgba(2,3,5,.16), rgba(3,4,6,.13) 55%, rgba(2,3,5,.4));
 }
 body::after {
-  content: ""; position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: .14;
+  content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .14;
   background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.025) 4px 5px);
 }
 .topbar {
@@ -49,7 +40,7 @@ body::after {
   color: #eceef0; text-shadow: 0 2px 14px #000;
 }
 .clock { justify-self: end; color: #e3e5e8; font: 800 clamp(20px, 2vw, 40px)/1 var(--display); letter-spacing: .05em; white-space: nowrap; }
-.board-shell { position: relative; z-index: 3; height: 82vh; padding: 1.5vh 3.3vw 0; }
+.board-shell { position: relative; z-index: 2; height: 82vh; padding: 1.5vh 3.3vw 0; }
 .slide-stage { position: relative; width: 100%; height: 100%; }
 .slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .45s ease, visibility .45s; }
 .slide.active { opacity: 1; visibility: visible; pointer-events: auto; }
@@ -290,11 +281,61 @@ body::after {
   .winner-2, .winner-3 { height: 82%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .arena-video, .sparks-video { display: none; }
   .slide { transition: none; }
   .slide.active .scene, .topbar h1.title-enter,
   .slide.active .winner, .slide.active .winner-1 .podium-visual::after,
   .slide.active .rank-row, .slide.active .exercise-table,
   .slide.active .exercise-table tbody tr:first-child td { animation: none; }
   .control-panel { transition: none; }
+}
+
+/* The arena stays full bleed; the division is indicated below the header. */
+body[data-sex="female"] {
+  --division-glow: rgba(255, 77, 160, .32);
+  --division-line: rgba(255, 105, 174, .22);
+}
+body[data-sex="male"] {
+  --division-glow: rgba(60, 151, 255, .34);
+  --division-line: rgba(103, 177, 255, .24);
+}
+.board-shell::before {
+  content: "";
+  position: absolute; z-index: 4;
+  top: 0; left: 0; right: 0; height: 15vh;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 43% 75% at 50% 0, var(--division-glow, transparent), transparent 80%),
+    linear-gradient(90deg, transparent 12%, var(--division-line, transparent) 50%, transparent 88%) top / 100% 2px no-repeat;
+  filter: blur(5px);
+}
+.scene {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.scene::before {
+  background: radial-gradient(ellipse 42% 55% at 50% 13%, rgba(255,224,174,.08), transparent);
+}
+
+/* Float only the gold plaque; its floor shadow stays anchored. */
+.winner-1::before {
+  content: "";
+  position: absolute; z-index: -1;
+  bottom: -5px; left: 12%; width: 76%; height: 23px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0,0,0,.88), rgba(0,0,0,.38) 50%, transparent 78%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+.winner-1 .podium-visual::before { opacity: 0; }
+.slide.active .winner-1 .podium-visual {
+  animation: goldFloat 3.6s ease-in-out 1.2s infinite;
+}
+@keyframes goldFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide.active .winner-1 .podium-visual { animation: none; }
 }
