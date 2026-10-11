@@ -104,6 +104,7 @@
 
   function updateLabels() {
     const title = titleFor(slides[current]);
+    document.body.dataset.sex = slides[current].type === 'division' ? slides[current].item.sex : slides[current].sex;
     const heading = document.getElementById('slideTitle');
     heading.textContent = title;
     heading.classList.remove('title-enter');
