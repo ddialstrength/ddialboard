@@ -29,23 +29,26 @@
   const pounds = value => `${Number(value).toLocaleString('en-US')} LB`;
   const total = athlete => Number(athlete.bench) + Number(athlete.squat) + Number(athlete.deadlift);
   const label = sex => sex === 'male' ? 'MEN' : 'WOMEN';
-  const art = { 1: 'assets/podium-gold.webp', 2: 'assets/podium-silver.webp', 3: 'assets/podium-bronze.webp' };
+  const art = { 1: 'assets/podium-gold-tall.webp', 2: 'assets/podium-silver-tall.webp', 3: 'assets/podium-bronze-tall.webp' };
+  const silhouette = `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="28" r="18" fill="currentColor"/><path d="M13 94c2-26 16-40 37-40s35 14 37 40Z" fill="currentColor"/></svg>`;
 
   function portrait(athlete) {
     // An optional local portrait covers the artwork's built-in silhouette.
     const path = athlete.photo || '';
     return /^assets\/athletes\/[a-zA-Z0-9._/-]+\.(png|jpe?g|webp)$/i.test(path)
-      ? `<img class="winner-photo" src="${escapeHTML(path)}" alt="Portrait of ${escapeHTML(athlete.name)}">`
-      : '';
+      ? `<img src="${escapeHTML(path)}" alt="Portrait of ${escapeHTML(athlete.name)}">`
+      : silhouette;
   }
 
   function card(athlete, rank) {
     const metal = ['gold', 'silver', 'bronze'][rank - 1];
     return `<article class="winner winner-${rank} ${metal}">
-      <img class="medal-art" src="${art[rank]}" alt="${metal} rank ${rank} podium">
-      ${portrait(athlete)}
-      <h2>${escapeHTML(athlete.name)}</h2>
-      <div class="winner-total">${pounds(total(athlete))}</div>
+      <div class="podium-visual">
+        <img class="medal-art" src="${art[rank]}" alt="${metal} rank ${rank} podium">
+        <div class="winner-photo-frame">${portrait(athlete)}</div>
+        <h2>${escapeHTML(athlete.name)}</h2>
+        <div class="winner-total">${pounds(total(athlete))}</div>
+      </div>
     </article>`;
   }
 

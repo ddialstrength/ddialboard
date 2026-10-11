@@ -10,4 +10,4 @@ Edit `assets/records.js`. Each division has ten `athletes`. For each athlete, ed
 
 The weight class labels are editable in the same file. For this preview they use round pound boundaries: women under 120, 120–154, 155–187, 188+; men under 150, 150–187, 188–220, 221+. Confirm class boundaries before using real results.
 
-The background uses the supplied arena image on all ten slides. The first three places use the supplied gold, silver, and bronze podium images, with editable names and totals layered over them. The header logo uses the existing metallic DFC mask.
+The background uses the supplied arena image on all ten slides. The first three places use the supplied taller transparent gold, silver, and bronze podium images. Editable portraits (or silhouettes), names, and totals are layered over them. The header logo uses the existing metallic DFC mask.
