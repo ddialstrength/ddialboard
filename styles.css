@@ -148,10 +148,12 @@ body::after {
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   text-align: center; text-shadow: 0 2px 4px #000, 0 0 8px #000;
 }
-.winner h2 { top: 61.8%; color: #f6f6f4; font-size: clamp(12px, 1.4vw, 29px); line-height: 1.15; }
-.winner-total { top: 70.5%; color: #ffe0a1; font-size: clamp(17px, 1.85vw, 37px); line-height: 1.15; }
-.winner-2 h2, .winner-3 h2 { top: 62.5%; }
-.winner-2 .winner-total, .winner-3 .winner-total { top: 74%; }
+.winner h2 { top: 60%; color: #f6f6f4; font-size: clamp(12px, 1.08vw, 22px); line-height: 1.1; }
+.winner-total { top: 67%; color: #ffe0a1; font-size: clamp(17px, 1.7vw, 34px); line-height: 1.1; }
+.winner-2 h2 { top: 60.5%; }
+.winner-2 .winner-total { top: 73%; }
+.winner-3 h2 { top: 59.6%; }
+.winner-3 .winner-total { top: 68%; }
 .winner-2 .winner-total { color: #e6e9ed; }
 .winner-3 .winner-total { color: #e8b999; }
 .winner-photo {
