@@ -29,26 +29,23 @@
   const pounds = value => `${Number(value).toLocaleString('en-US')} LB`;
   const total = athlete => Number(athlete.bench) + Number(athlete.squat) + Number(athlete.deadlift);
   const label = sex => sex === 'male' ? 'MEN' : 'WOMEN';
-  const avatar = `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="29" r="18" fill="currentColor"/><path d="M15 92c2-25 15-38 35-38s33 13 35 38Z" fill="currentColor"/></svg>`;
-  const crown = `<svg viewBox="0 0 100 65" aria-hidden="true"><path d="M8 17 29 37 50 7 71 37 92 17 83 58H17Z" fill="currentColor"/><circle cx="8" cy="12" r="5" fill="currentColor"/><circle cx="50" cy="6" r="5" fill="currentColor"/><circle cx="92" cy="12" r="5" fill="currentColor"/></svg>`;
+  const art = { 1: 'assets/podium-gold.webp', 2: 'assets/podium-silver.webp', 3: 'assets/podium-bronze.webp' };
 
   function portrait(athlete) {
-    // Only relative, local image paths are supported, so the preview works offline.
+    // An optional local portrait covers the artwork's built-in silhouette.
     const path = athlete.photo || '';
     return /^assets\/athletes\/[a-zA-Z0-9._/-]+\.(png|jpe?g|webp)$/i.test(path)
-      ? `<img src="${escapeHTML(path)}" alt="Portrait of ${escapeHTML(athlete.name)}">`
-      : avatar;
+      ? `<img class="winner-photo" src="${escapeHTML(path)}" alt="Portrait of ${escapeHTML(athlete.name)}">`
+      : '';
   }
 
   function card(athlete, rank) {
     const metal = ['gold', 'silver', 'bronze'][rank - 1];
     return `<article class="winner winner-${rank} ${metal}">
-      ${rank === 1 ? `<div class="crown">${crown}</div>` : ''}
-      <div class="winner-rank">${rank}</div>
-      <div class="winner-portrait">${portrait(athlete)}</div>
+      <img class="medal-art" src="${art[rank]}" alt="${metal} rank ${rank} podium">
+      ${portrait(athlete)}
       <h2>${escapeHTML(athlete.name)}</h2>
       <div class="winner-total">${pounds(total(athlete))}</div>
-      <div class="winner-lifts">BP ${pounds(athlete.bench)} · SQ ${pounds(athlete.squat)} · DL ${pounds(athlete.deadlift)}</div>
     </article>`;
   }
 
