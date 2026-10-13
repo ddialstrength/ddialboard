@@ -349,3 +349,117 @@ body[data-sex="male"] {
 @media (prefers-reduced-motion: reduce) {
   .slide.active .winner-1 .podium-visual { animation: none; }
 }
+
+/* Three equal lift boards replace combined rankings on every slide. */
+.exercise-scene,
+.division-scene,
+.summary-scene {
+  display: block;
+  padding: clamp(20px, 4.5vh, 58px) 1.6vw clamp(20px, 5vh, 62px);
+}
+.exercise-grid {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.4vw, 28px);
+  align-items: stretch;
+}
+.exercise-table {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border: 1px solid rgba(218,224,231,.37);
+  border-radius: 8px;
+  background: linear-gradient(160deg, rgba(39,42,47,.91), rgba(8,10,14,.9) 27%, rgba(20,22,26,.9));
+  box-shadow: inset 0 1px rgba(255,255,255,.13), 0 15px 40px rgba(0,0,0,.3);
+}
+.table-title {
+  min-height: clamp(85px, 13vh, 142px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1vh .7vw;
+  border-bottom: 1px solid rgba(218,224,231,.43);
+  background: linear-gradient(120deg, #5c6269, #d0d5da 38%, #747c85 67%, #e6e8e9);
+}
+.exercise-table h2 {
+  padding: 0;
+  background: none;
+  color: #111418;
+  font: 900 clamp(26px, 2.2vw, 45px)/.96 var(--display);
+  text-align: center;
+  text-wrap: balance;
+  letter-spacing: .045em;
+}
+.table-title span {
+  margin-top: .8vh;
+  color: #343b41;
+  font: 800 clamp(11px, 1vw, 18px)/1 var(--ui);
+  letter-spacing: .18em;
+}
+.exercise-table table {
+  width: 100%;
+  height: auto;
+  flex: 1;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.exercise-table thead { height: 10%; }
+.exercise-table th {
+  padding: .7vh .75vw;
+  color: #c8ced3;
+  border-bottom: 1px solid rgba(220,225,230,.25);
+  font: 800 clamp(12px, .98vw, 20px)/1 var(--ui);
+  letter-spacing: .13em;
+}
+.exercise-table tbody tr { height: 22.5%; }
+.exercise-table td {
+  padding: .7vh .75vw;
+  border-bottom: 1px solid rgba(215,223,230,.16);
+  color: #f3f4f5;
+  font: 800 clamp(18px, 1.45vw, 31px)/1.05 var(--display);
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.exercise-table tbody tr:last-child td { border-bottom: 0; }
+.exercise-table th:nth-child(1), .exercise-table td:nth-child(1) { width: 16%; text-align: center; }
+.exercise-table th:nth-child(2), .exercise-table td:nth-child(2) { width: 59%; text-align: left; }
+.exercise-table th:nth-child(3), .exercise-table td:nth-child(3) { width: 25%; text-align: right; }
+.exercise-table td:last-child { color: #f2f3f4; white-space: nowrap; }
+.exercise-table tbody tr:first-child td { color: #f8d699; }
+.exercise-table tbody tr:first-child td:last-child { color: #ffe2a7; }
+.rank-badge {
+  display: inline-grid;
+  place-items: center;
+  width: clamp(28px, 2.3vw, 47px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(216,222,230,.42);
+  border-radius: 50%;
+}
+.exercise-table tbody tr:first-child .rank-badge { border-color: rgba(255,216,151,.7); }
+.summary-table th:nth-child(1), .summary-table td:nth-child(1) { width: 33%; text-align: left; }
+.summary-table th:nth-child(2), .summary-table td:nth-child(2) { width: 43%; }
+.summary-table th:nth-child(3), .summary-table td:nth-child(3) { width: 24%; }
+.summary-table td:first-child { font-size: clamp(15px, 1.16vw, 25px); }
+@media (max-width: 1050px) {
+  .exercise-table td { font-size: clamp(14px, 1.5vw, 22px); }
+  .summary-table td:first-child { font-size: clamp(12px, 1.18vw, 19px); }
+}
+@media (max-width: 700px) {
+  .board-shell { height: 1210px; padding: 10px 2vw 0; }
+  .exercise-scene, .division-scene, .summary-scene { padding: 15px 2vw; overflow: visible; }
+  .exercise-grid { display: flex; flex-direction: column; height: 100%; gap: 12px; padding: 0; }
+  .exercise-table { min-height: 0; flex: 1; }
+  .table-title { min-height: 58px; padding: 8px; }
+  .exercise-table h2 { font-size: 27px; }
+  .exercise-table table { height: auto; }
+  .exercise-table td { font-size: clamp(14px, 3.8vw, 20px); }
+  .summary-table td:first-child { font-size: clamp(12px, 3.2vw, 17px); }
+  .exercise-table th, .exercise-table td { padding: 3px 7px; }
+  .rank-badge { width: 28px; }
+}
+
