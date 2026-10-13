@@ -426,6 +426,11 @@ body[data-sex="male"] {
   font: 700 clamp(12px, .98vw, 20px)/1 var(--ui);
   letter-spacing: .13em;
 }
+.exercise-table th:first-child {
+  padding-inline: .2vw;
+  font-size: clamp(10px, .78vw, 15px);
+  letter-spacing: .04em;
+}
 .exercise-table tbody tr { height: 22.5%; }
 .exercise-table tbody tr:nth-child(even) td { background: rgba(221,233,246,.085); }
 .exercise-table tbody tr:first-child {
