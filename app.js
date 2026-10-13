@@ -14,13 +14,13 @@
   const lifts = [
     { key: 'bench', title: 'BENCH PRESS' },
     { key: 'squat', title: 'SQUAT' },
-    { key: 'deadlift', title: 'DEADLIFT' }
+    { key: 'row', title: 'CHEST-SUPPORTED ROW', note: '3 CLEAN REPS' }
   ];
   const slides = [
     ...records.filter(item => item.sex === 'female').map(item => ({ type: 'division', item })),
     ...records.filter(item => item.sex === 'male').map(item => ({ type: 'division', item })),
-    { type: 'exercise', sex: 'female' },
-    { type: 'exercise', sex: 'male' }
+    { type: 'summary', sex: 'female' },
+    { type: 'summary', sex: 'male' }
   ];
   let current = 0;
   let timer;
@@ -32,73 +32,41 @@
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[char]));
   const pounds = value => `${Number(value).toLocaleString('en-US')} LB`;
-  const total = athlete => Number(athlete.bench) + Number(athlete.squat) + Number(athlete.deadlift);
   const label = sex => sex === 'male' ? 'MEN' : 'WOMEN';
-  const art = { 1: 'assets/podium-gold-tall.webp', 2: 'assets/podium-silver-tall.webp', 3: 'assets/podium-bronze-tall.webp' };
-  const silhouette = `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="28" r="18" fill="currentColor"/><path d="M13 94c2-26 16-40 37-40s35 14 37 40Z" fill="currentColor"/></svg>`;
+  const byLift = key => (a, b) => Number(b[key]) - Number(a[key]) || a.name.localeCompare(b.name);
 
-  function portrait(athlete) {
-    // An optional local portrait covers the artwork's built-in silhouette.
-    const path = athlete.photo || '';
-    return /^assets\/athletes\/[a-zA-Z0-9._/-]+\.(png|jpe?g|webp)$/i.test(path)
-      ? `<img src="${escapeHTML(path)}" alt="Portrait of ${escapeHTML(athlete.name)}">`
-      : silhouette;
-  }
-
-  function card(athlete, rank) {
-    const metal = ['gold', 'silver', 'bronze'][rank - 1];
-    return `<article class="winner winner-${rank} ${metal}">
-      <div class="podium-visual">
-        <img class="medal-art" src="${art[rank]}" alt="${metal} rank ${rank} podium">
-        <div class="winner-photo-frame">${portrait(athlete)}</div>
-        <h2>${escapeHTML(athlete.name)}</h2>
-        <div class="winner-total">${pounds(total(athlete))}</div>
-      </div>
-    </article>`;
-  }
-
-  function smallRank(athlete, rank) {
-    return `<div class="rank-row" style="--rank-step:${rank - 4}"><span class="rank-number">${rank}</span><span class="rank-name">${escapeHTML(athlete.name)}</span><strong>${pounds(total(athlete))}</strong></div>`;
+  function table(lift, rows, summary = false) {
+    return `<section class="exercise-table${summary ? ' summary-table' : ''}">
+      <div class="table-title"><h2>${lift.title}</h2>${lift.note ? `<span>${lift.note}</span>` : ''}</div>
+      <table><thead><tr>${summary ? '<th>CLASS</th><th>LEADER</th><th>PR</th>' : '<th>RANK</th><th>MEMBER</th><th>PR</th>'}</tr></thead>
+      <tbody>${rows.map((entry, index) => `<tr>${summary
+        ? `<td>${escapeHTML(entry.division)}</td><td>${escapeHTML(entry.name)}</td>`
+        : `<td><span class="rank-badge">${String(index + 1).padStart(2, '0')}</span></td><td>${escapeHTML(entry.name)}</td>`
+      }<td>${pounds(entry[lift.key])}</td></tr>`).join('')}</tbody></table>
+    </section>`;
   }
 
   function renderDivision(item) {
-    const sorted = [...item.athletes].sort((a, b) => total(b) - total(a) || a.name.localeCompare(b.name));
-    const remainder = sorted.slice(3);
-    return `<div class="scene division-scene">
-      <div class="top-three" aria-label="Top three ranked by combined lift total">
-        ${card(sorted[1], 2)}${card(sorted[0], 1)}${card(sorted[2], 3)}
-      </div>
-      <div class="fourth-rank">${smallRank(remainder[0], 4)}</div>
-      <div class="rank-columns">
-        <div class="rank-column">${remainder.slice(1, 4).map((athlete, index) => smallRank(athlete, index + 5)).join('')}</div>
-        <div class="rank-column">${remainder.slice(4).map((athlete, index) => smallRank(athlete, index + 8)).join('')}</div>
-      </div>
-      <div class="scoring-note">TOTAL = BENCH + SQUAT + DEADLIFT · LB</div>
-    </div>`;
+    return `<div class="scene exercise-scene division-scene"><div class="exercise-grid">${lifts.map(lift =>
+      table(lift, [...item.athletes].sort(byLift(lift.key)).slice(0, 4))
+    ).join('')}</div></div>`;
   }
 
-  function renderExercise(sex) {
-    const people = records.filter(item => item.sex === sex).flatMap(item =>
-      item.athletes.map(athlete => ({ ...athlete, division: item.division }))
-    );
-    const tables = lifts.map(lift => {
-      const leaders = [...people].sort((a, b) => b[lift.key] - a[lift.key] || a.name.localeCompare(b.name)).slice(0, 10);
-      return `<section class="exercise-table"><h2>${lift.title}</h2><table>
-        <thead><tr><th>#</th><th>NAME</th><th>CLASS</th><th>PR</th></tr></thead>
-        <tbody>${leaders.map((person, index) => `<tr><td>${index + 1}</td><td>${escapeHTML(person.name)}</td><td>${escapeHTML(person.division)}</td><td>${pounds(person[lift.key])}</td></tr>`).join('')}</tbody>
-      </table></section>`;
-    }).join('');
-    return `<div class="scene exercise-scene"><div class="exercise-grid">${tables}</div><div class="scoring-note">TOP 10 PERSONAL RECORDS PER EXERCISE · LB</div></div>`;
+  function renderSummary(sex) {
+    const divisions = records.filter(item => item.sex === sex);
+    return `<div class="scene exercise-scene summary-scene"><div class="exercise-grid">${lifts.map(lift =>
+      table(lift, divisions.map(item => ({ ...[...item.athletes].sort(byLift(lift.key))[0], division: item.division })), true)
+    ).join('')}</div></div>`;
   }
 
   function titleFor(slide) {
     return slide.type === 'division'
       ? `${label(slide.item.sex)} · ${slide.item.division.toUpperCase()}`
-      : `${label(slide.sex)} · EXERCISE CLASS`;
+      : `${label(slide.sex)} · STRENGTH BOARD`;
   }
 
   function buildSlides() {
-    stage.innerHTML = slides.map((slide, index) => `<section class="slide${index === 0 ? ' active' : ''}" aria-label="${escapeHTML(titleFor(slide))}" ${index === 0 ? '' : 'aria-hidden="true"'}>${slide.type === 'division' ? renderDivision(slide.item) : renderExercise(slide.sex)}</section>`).join('');
+    stage.innerHTML = slides.map((slide, index) => `<section class="slide${index === 0 ? ' active' : ''}" aria-label="${escapeHTML(titleFor(slide))}" ${index === 0 ? '' : 'aria-hidden="true"'}>${slide.type === 'division' ? renderDivision(slide.item) : renderSummary(slide.sex)}</section>`).join('');
     updateLabels();
   }
 
@@ -198,3 +166,4 @@
   }, 100);
   schedule();
 })();
+
