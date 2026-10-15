@@ -4,9 +4,10 @@
   --bronze: #c58f68;
   --text: #f8f7f3;
   --muted: #b8bec4;
-  --display: "Archivo Black", Impact, sans-serif;
-  --records: "Barlow Semi Condensed", "Arial Narrow", sans-serif;
-  --ui: "Montserrat", system-ui, sans-serif;
+  --display: "Oswald", Impact, sans-serif;
+  --records: "Roboto Condensed", "Arial Narrow", sans-serif;
+  --names: "Barlow Semi Condensed", "Arial Narrow", sans-serif;
+  --ui: "Inter", system-ui, sans-serif;
 }
 * { box-sizing: border-box; }
 html, body { min-height: 100%; }
@@ -45,11 +46,11 @@ body::after {
   filter: drop-shadow(0 5px 12px #000);
 }
 .topbar h1 {
-  margin: 0; text-align: center; font: 400 clamp(24px, 3vw, 62px)/1 var(--display);
-  letter-spacing: .025em; text-transform: uppercase; white-space: nowrap;
+  margin: 0; text-align: center; font: 700 clamp(24px, 3.2vw, 66px)/1 var(--display);
+  letter-spacing: .055em; text-transform: uppercase; white-space: nowrap;
   color: #eceef0; text-shadow: 0 2px 14px #000;
 }
-.clock { justify-self: end; color: #e3e5e8; font: 800 clamp(22px, 2.15vw, 42px)/1 var(--records); letter-spacing: .02em; white-space: nowrap; }
+.clock { justify-self: end; color: #e3e5e8; font: 700 clamp(20px, 2vw, 40px)/1 var(--records); letter-spacing: .04em; white-space: nowrap; }
 .board-shell { position: relative; z-index: 3; height: 82vh; padding: 1.5vh 3.3vw 0; }
 .slide-stage { position: relative; width: 100%; height: 100%; }
 .slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .45s ease, visibility .45s; }
@@ -400,10 +401,10 @@ body[data-sex="male"] {
   padding: 0;
   background: none;
   color: #241809;
-  font: 400 clamp(22px, 1.95vw, 41px)/1.12 var(--display);
+  font: 700 clamp(26px, 2.2vw, 45px)/1.08 var(--display);
   text-align: center;
   text-wrap: balance;
-  letter-spacing: .012em;
+  letter-spacing: .045em;
   text-shadow: 0 1px 0 rgba(255,250,223,.64), 0 2px 2px rgba(70,39,11,.2);
 }
 .table-title span {
@@ -425,8 +426,8 @@ body[data-sex="male"] {
   color: #e4e8ed;
   border-bottom: 1px solid rgba(244,198,116,.42);
   background: rgba(255,255,255,.025);
-  font: 800 clamp(12px, 1vw, 20px)/1 var(--ui);
-  letter-spacing: .07em;
+  font: 700 clamp(12px, .98vw, 20px)/1 var(--ui);
+  letter-spacing: .13em;
 }
 .exercise-table th:first-child {
   padding-inline: .2vw;
@@ -449,6 +450,7 @@ body[data-sex="male"] {
   white-space: nowrap;
   text-shadow: 0 1px 3px #000, 0 0 8px rgba(235,241,249,.12);
 }
+.exercise-table td:nth-child(2), .exercise-table td:last-child { font-family: var(--names); }
 .exercise-table tbody tr:last-child td { border-bottom: 0; }
 .exercise-table th:nth-child(1), .exercise-table td:nth-child(1) { width: 16%; text-align: center; }
 .exercise-table th:nth-child(2), .exercise-table td:nth-child(2) { width: 59%; text-align: left; }
