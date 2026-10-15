@@ -512,3 +512,61 @@ body[data-sex="male"] {
   .slide.active .exercise-table tbody tr:first-child td { animation: none; }
 }
 
+
+
+/* Table palette and finish from the final two slides in preview v3.
+   Keep the current data, columns, slide order, and TV-sized type. */
+.exercise-table {
+  border: 1px solid rgba(205, 210, 214, .52);
+  border-radius: 10px;
+  background: rgba(4, 5, 7, .78);
+  box-shadow: none;
+}
+.table-title {
+  min-height: 0;
+  padding: .8vh 1vw;
+  border-bottom: 0;
+  background: linear-gradient(90deg, #d4a863, #f4d696 46%, #ae7d43);
+  box-shadow: none;
+}
+.exercise-table h2 {
+  color: #12100e;
+  font-weight: 900;
+  letter-spacing: .055em;
+  text-shadow: none;
+}
+.table-title span { color: #12100e; }
+.exercise-table th {
+  color: #bfc2c5;
+  border-bottom: 1px solid #91979e;
+  background: transparent;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.exercise-table tbody tr:first-child { background: transparent; }
+.exercise-table tbody tr:nth-child(even) td { background: rgba(219, 223, 228, .055); }
+.exercise-table td {
+  color: #f0f1f2;
+  border-bottom: 1px solid rgba(205, 210, 215, .15);
+  font-weight: 700;
+  text-shadow: none;
+}
+.exercise-table tbody tr:first-child td {
+  color: var(--gold);
+  font-weight: 900;
+  text-shadow: none;
+}
+.exercise-table td:last-child,
+.exercise-table tbody tr:first-child td:last-child { color: #f3d79e; }
+.rank-badge,
+.exercise-table tbody tr:first-child .rank-badge {
+  width: auto;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+@media (max-width: 700px) {
+  .table-title { min-height: 0; padding: 8px; }
+}
