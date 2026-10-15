@@ -517,10 +517,10 @@ body[data-sex="male"] {
 /* Table palette and finish from the final two slides in preview v3.
    Keep the current data, columns, slide order, and TV-sized type. */
 .exercise-table {
-  border: 1px solid rgba(205, 210, 214, .52);
+  border: 1px solid rgba(243, 205, 126, .88);
   border-radius: 10px;
-  background: rgba(4, 5, 7, .78);
-  box-shadow: none;
+  background: rgba(4, 5, 7, .82);
+  box-shadow: 0 0 15px rgba(255, 193, 73, .24);
 }
 .table-title {
   box-sizing: border-box;
@@ -529,16 +529,18 @@ body[data-sex="male"] {
   flex: 0 0 clamp(72px, 7.5vh, 94px);
   padding: .5vh 1vw;
   border-bottom: 0;
-  background: linear-gradient(90deg, #d4a863, #f4d696 46%, #ae7d43);
-  box-shadow: none;
+  background:
+    linear-gradient(163deg, rgba(255, 255, 249, .72), transparent 28%, rgba(255, 255, 255, .12) 49%, transparent 59%),
+    linear-gradient(90deg, #e2a13b, #ffe29a 27%, #fff2bc 48%, #f8c95e 72%, #dc902b);
+  box-shadow: inset 0 2px 0 rgba(255, 251, 223, .96), inset 0 -3px 0 rgba(100, 54, 7, .31), 0 3px 18px rgba(255, 194, 77, .4);
 }
 .exercise-table h2 {
-  color: #12100e;
+  color: #201308;
   font-weight: 900;
   letter-spacing: .055em;
   text-shadow: none;
 }
-.table-title span { color: #12100e; }
+.table-title span { color: #201308; }
 .exercise-table th {
   color: #bfc2c5;
   border-bottom: 1px solid #91979e;
@@ -555,12 +557,12 @@ body[data-sex="male"] {
   text-shadow: none;
 }
 .exercise-table tbody tr:first-child td {
-  color: var(--gold);
+  color: #ffdc83;
   font-weight: 900;
-  text-shadow: none;
+  text-shadow: 0 0 7px rgba(255, 189, 63, .35);
 }
 .exercise-table td:last-child,
-.exercise-table tbody tr:first-child td:last-child { color: #f3d79e; }
+.exercise-table tbody tr:first-child td:last-child { color: #ffe29a; }
 .rank-badge,
 .exercise-table tbody tr:first-child .rank-badge {
   width: auto;
