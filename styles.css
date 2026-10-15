@@ -484,8 +484,9 @@ body[data-sex="male"] {
 .summary-table th:nth-child(1), .summary-table td:nth-child(1) { width: 29%; text-align: left; }
 .summary-table th:nth-child(2), .summary-table td:nth-child(2) { width: 49%; }
 .summary-table th:nth-child(3), .summary-table td:nth-child(3) { width: 22%; }
-.summary-table td { font-size: clamp(18px, 1.35vw, 28px); }
-.summary-table td:first-child { font-size: clamp(15px, 1.15vw, 23px); }
+.summary-table td { font-size: clamp(19px, 1.45vw, 29px); }
+.summary-table td:first-child { font-size: clamp(16px, 1.2vw, 24px); }
+.summary-table td:last-child { font-size: clamp(18px, 1.35vw, 28px); }
 .summary-table td:first-child { font-weight: 700; }
 .summary-table th, .summary-table td { padding-inline: .5vw; }
 @media (max-width: 1050px) {
