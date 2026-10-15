@@ -17,10 +17,10 @@
     { key: 'row', title: 'CHEST-SUPPORTED ROW', note: '3 CLEAN REPS' }
   ];
   const slides = [
-    ...records.filter(item => item.sex === 'female').map(item => ({ type: 'division', item })),
-    ...records.filter(item => item.sex === 'male').map(item => ({ type: 'division', item })),
     { type: 'summary', sex: 'female' },
-    { type: 'summary', sex: 'male' }
+    { type: 'summary', sex: 'male' },
+    ...records.filter(item => item.sex === 'female').map(item => ({ type: 'division', item })),
+    ...records.filter(item => item.sex === 'male').map(item => ({ type: 'division', item }))
   ];
   let current = 0;
   let timer;
