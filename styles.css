@@ -364,11 +364,12 @@ body[data-sex="male"] {
   padding: clamp(20px, 4.5vh, 58px) 1.6vw clamp(20px, 5vh, 62px);
 }
 .exercise-grid {
-  width: 100%;
+  width: 89%;
   height: 100%;
+  margin-inline: auto;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(12px, 1.4vw, 28px);
+  gap: clamp(10px, .85vw, 18px);
   align-items: stretch;
 }
 .exercise-table {
@@ -378,9 +379,9 @@ body[data-sex="male"] {
   border: 1px solid rgba(249,207,125,.78);
   border-radius: 8px;
   background:
-    linear-gradient(128deg, rgba(255,230,163,.12), transparent 30%, rgba(214,153,58,.07) 72%, transparent),
-    linear-gradient(160deg, rgba(49,37,24,.97), rgba(15,15,16,.96) 31%, rgba(34,28,22,.96));
-  box-shadow: inset 0 1px rgba(255,245,206,.65), inset 0 0 35px rgba(200,143,48,.09), 0 19px 44px rgba(0,0,0,.55), 0 0 28px rgba(225,163,65,.24);
+    linear-gradient(130deg, rgba(255,255,255,.06), transparent 28%, rgba(200,212,224,.025) 68%, transparent),
+    linear-gradient(160deg, rgba(27,31,37,.97), rgba(8,11,16,.96) 35%, rgba(22,26,32,.96));
+  box-shadow: inset 0 1px rgba(255,245,206,.4), 0 19px 44px rgba(0,0,0,.6), 0 0 18px rgba(225,163,65,.16);
 }
 .table-title {
   min-height: clamp(85px, 13vh, 142px);
@@ -421,9 +422,9 @@ body[data-sex="male"] {
 .exercise-table thead { height: 10%; }
 .exercise-table th {
   padding: .7vh .75vw;
-  color: #f8deb0;
-  border-bottom: 1px solid rgba(244,198,116,.55);
-  background: linear-gradient(180deg, rgba(160,104,38,.23), rgba(12,10,9,.05));
+  color: #e4e8ed;
+  border-bottom: 1px solid rgba(244,198,116,.42);
+  background: rgba(255,255,255,.025);
   font: 700 clamp(12px, .98vw, 20px)/1 var(--ui);
   letter-spacing: .13em;
 }
@@ -433,13 +434,13 @@ body[data-sex="male"] {
   letter-spacing: .04em;
 }
 .exercise-table tbody tr { height: 22.5%; }
-.exercise-table tbody tr:nth-child(even) td { background: rgba(220,159,67,.075); }
+.exercise-table tbody tr:nth-child(even) td { background: rgba(196,207,220,.065); }
 .exercise-table tbody tr:first-child {
-  background: linear-gradient(90deg, rgba(252,191,82,.25), rgba(222,162,66,.09) 68%, transparent);
+  background: rgba(180,193,207,.055);
 }
 .exercise-table td {
   padding: .7vh .75vw;
-  border-bottom: 1px solid rgba(238,198,127,.28);
+  border-bottom: 1px solid rgba(207,216,227,.22);
   color: #fff;
   font: 800 clamp(21px, 1.65vw, 34px)/1.05 var(--records);
   text-transform: uppercase;
@@ -454,10 +455,10 @@ body[data-sex="male"] {
 .exercise-table th:nth-child(3), .exercise-table td:nth-child(3) { width: 25%; text-align: right; }
 .exercise-table td:last-child { color: #f8fbff; white-space: nowrap; }
 .exercise-table tbody tr:first-child td {
-  color: #ffe2a1;
-  text-shadow: 0 1px 2px #000, 0 0 9px rgba(255,194,88,.52), 0 0 19px rgba(255,175,53,.26);
+  color: #fff;
+  text-shadow: 0 2px 5px rgba(0,0,0,.8);
 }
-.exercise-table tbody tr:first-child td:last-child { color: #ffedbd; }
+.exercise-table tbody tr:first-child td:last-child { color: #fff; }
 .rank-badge {
   display: inline-grid;
   place-items: center;
@@ -469,12 +470,12 @@ body[data-sex="male"] {
   box-shadow: inset 0 1px rgba(255,255,255,.3), 0 0 9px rgba(218,233,246,.17);
 }
 .exercise-table tbody tr:first-child .rank-badge {
-  border-color: #ffdf9b;
-  background: radial-gradient(circle at 36% 22%, rgba(255,236,178,.42), rgba(173,112,38,.23) 60%, rgba(60,38,13,.2));
-  box-shadow: inset 0 1px rgba(255,246,206,.72), 0 0 15px rgba(255,187,69,.48);
+  border-color: rgba(238,245,252,.75);
+  background: radial-gradient(circle at 36% 22%, rgba(255,255,255,.25), rgba(67,80,93,.18) 60%, rgba(3,5,9,.35));
+  box-shadow: inset 0 1px rgba(255,255,255,.4), 0 0 10px rgba(218,233,246,.2);
 }
 .slide.active .exercise-table tbody tr:first-child td {
-  animation: goldTypeGlow 4.8s ease-in-out 1.5s infinite;
+  animation: none;
 }
 @keyframes goldTypeGlow {
   0%, 100% { text-shadow: 0 1px 2px #000, 0 0 8px rgba(255,194,88,.43), 0 0 16px rgba(255,175,53,.2); }
@@ -493,7 +494,7 @@ body[data-sex="male"] {
 @media (max-width: 700px) {
   .board-shell { height: 1210px; padding: 10px 2vw 0; }
   .exercise-scene, .division-scene, .summary-scene { padding: 15px 2vw; overflow: visible; }
-  .exercise-grid { display: flex; flex-direction: column; height: 100%; gap: 12px; padding: 0; }
+  .exercise-grid { display: flex; flex-direction: column; width: 100%; height: 100%; gap: 12px; padding: 0; }
   .exercise-table { min-height: 0; flex: 1; }
   .table-title { min-height: 58px; padding: 8px; }
   .exercise-table h2 { font-size: 27px; }
