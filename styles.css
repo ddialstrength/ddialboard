@@ -483,11 +483,11 @@ body[data-sex="male"] {
   0%, 100% { text-shadow: 0 1px 2px #000, 0 0 8px rgba(255,194,88,.43), 0 0 16px rgba(255,175,53,.2); }
   50% { text-shadow: 0 1px 2px #000, 0 0 12px rgba(255,218,134,.82), 0 0 26px rgba(255,184,57,.42); }
 }
-.summary-table th:nth-child(1), .summary-table td:nth-child(1) { width: 29%; text-align: left; }
-.summary-table th:nth-child(2), .summary-table td:nth-child(2) { width: 49%; }
+.summary-table th:nth-child(1), .summary-table td:nth-child(1) { width: 31%; text-align: left; }
+.summary-table th:nth-child(2), .summary-table td:nth-child(2) { width: 47%; }
 .summary-table th:nth-child(3), .summary-table td:nth-child(3) { width: 22%; }
 .summary-table td { font-size: clamp(19px, 1.45vw, 29px); }
-.summary-table td:first-child { font-size: clamp(16px, 1.2vw, 24px); }
+.summary-table td:first-child { font-size: clamp(15px, 1.1vw, 23px); }
 .summary-table td:last-child { font-size: clamp(18px, 1.35vw, 28px); }
 .summary-table td:first-child { font-weight: 700; }
 .summary-table th, .summary-table td { padding-inline: .5vw; }
