@@ -364,7 +364,7 @@ body[data-sex="male"] {
   padding: clamp(20px, 4.5vh, 58px) 1.6vw clamp(20px, 5vh, 62px);
 }
 .exercise-grid {
-  width: 89%;
+  width: 91%;
   height: 100%;
   margin-inline: auto;
   display: grid;
@@ -481,11 +481,11 @@ body[data-sex="male"] {
   0%, 100% { text-shadow: 0 1px 2px #000, 0 0 8px rgba(255,194,88,.43), 0 0 16px rgba(255,175,53,.2); }
   50% { text-shadow: 0 1px 2px #000, 0 0 12px rgba(255,218,134,.82), 0 0 26px rgba(255,184,57,.42); }
 }
-.summary-table th:nth-child(1), .summary-table td:nth-child(1) { width: 33%; text-align: left; }
-.summary-table th:nth-child(2), .summary-table td:nth-child(2) { width: 43%; }
-.summary-table th:nth-child(3), .summary-table td:nth-child(3) { width: 24%; }
-.summary-table td { font-size: clamp(18px, 1.4vw, 29px); }
-.summary-table td:first-child { font-size: clamp(15px, 1.16vw, 25px); }
+.summary-table th:nth-child(1), .summary-table td:nth-child(1) { width: 32%; text-align: left; }
+.summary-table th:nth-child(2), .summary-table td:nth-child(2) { width: 45%; }
+.summary-table th:nth-child(3), .summary-table td:nth-child(3) { width: 23%; }
+.summary-table td { font-size: clamp(16px, 1.25vw, 26px); }
+.summary-table td:first-child { font-size: clamp(13px, 1vw, 22px); }
 .summary-table td:first-child { font-weight: 700; }
 @media (max-width: 1050px) {
   .exercise-table td { font-size: clamp(14px, 1.5vw, 22px); }
