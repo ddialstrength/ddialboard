@@ -523,8 +523,11 @@ body[data-sex="male"] {
   box-shadow: none;
 }
 .table-title {
-  min-height: 0;
-  padding: .8vh 1vw;
+  box-sizing: border-box;
+  height: clamp(72px, 7.5vh, 94px);
+  min-height: clamp(72px, 7.5vh, 94px);
+  flex: 0 0 clamp(72px, 7.5vh, 94px);
+  padding: .5vh 1vw;
   border-bottom: 0;
   background: linear-gradient(90deg, #d4a863, #f4d696 46%, #ae7d43);
   box-shadow: none;
@@ -568,5 +571,5 @@ body[data-sex="male"] {
   box-shadow: none;
 }
 @media (max-width: 700px) {
-  .table-title { min-height: 0; padding: 8px; }
+  .table-title { height: 78px; min-height: 78px; flex-basis: 78px; padding: 8px; }
 }
