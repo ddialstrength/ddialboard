@@ -678,3 +678,16 @@ body::before {
   .exercise-scene, .division-scene, .summary-scene { padding: 24px 2vw; }
   .exercise-grid { width: 100%; gap: 12px; }
 }
+
+/* Scale the reference masthead and summary records for TV viewing. */
+.metal-logo { margin-left: 7.7vw; transform: translateY(2vh); }
+.topbar h1 { transform: translateY(1vh); }
+.clock { margin-right: 3.5vw; transform: translateY(1vh); }
+.summary-table td { font-size: clamp(20px, 1.6vw, 33px); }
+.summary-table td:first-child { font-size: clamp(15px, 1.2vw, 24px); }
+.summary-table td:last-child { font-size: clamp(19px, 1.48vw, 30px); }
+@media (max-width: 700px) {
+  .metal-logo { margin-left: 0; transform: none; }
+  .clock { margin-right: 0; transform: none; }
+  .topbar h1 { transform: none; }
+}
