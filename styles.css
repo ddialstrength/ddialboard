@@ -575,3 +575,119 @@ body[data-sex="male"] {
 @media (max-width: 700px) {
   .table-title { height: 78px; min-height: 78px; flex-basis: 78px; padding: 8px; }
 }
+
+
+
+/* Arena and table treatment based on the approved Strength Board mockup. */
+body {
+  background: #050609 url("assets/ddial-arena-reference.jpg") center center / 100% 100% fixed no-repeat;
+}
+body[data-sex="male"] {
+  background-image: url("assets/ddial-arena-reference-men.jpg");
+}
+.arena-video, .sparks-video, .arena-video.is-playing, .sparks-video.is-playing {
+  display: none;
+}
+body::before {
+  background: linear-gradient(180deg, rgba(0,0,0,.1), transparent 28%, rgba(0,0,0,.16) 72%, rgba(0,0,0,.22));
+}
+.topbar {
+  height: 18vh;
+  min-height: 116px;
+  padding: 2vh 3.5vw 1.2vh;
+  border-bottom: 1px solid var(--division-line, rgba(255,105,174,.4));
+  background: linear-gradient(180deg, rgba(1,2,4,.83), rgba(3,4,7,.72) 80%, rgba(7,4,10,.44));
+  box-shadow: 0 1px 0 rgba(255,226,174,.45), 0 2px 18px var(--division-glow, rgba(255,77,160,.22));
+}
+.topbar::before {
+  content: "";
+  position: absolute;
+  top: 5vh; left: 8%; right: 8%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #f8dcb0 13%, #fff6df 50%, #f8dcb0 87%, transparent);
+  box-shadow: 0 0 9px #ffc56f;
+}
+.topbar h1 {
+  font-size: clamp(28px, 3.8vw, 72px);
+  color: #f8f9fa;
+  text-shadow: 0 2px 1px #4b5058, 0 5px 8px #000, 0 0 12px rgba(255,255,255,.28);
+}
+.clock {
+  color: #fff;
+  text-shadow: 0 2px 4px #000, 0 0 10px rgba(255,255,255,.3);
+}
+.board-shell {
+  height: 76vh;
+  padding: 0;
+}
+.board-shell::before {
+  top: 0;
+  height: 7vh;
+  background: radial-gradient(ellipse 40% 80% at 50% 0, var(--division-glow, transparent), transparent 85%);
+  filter: blur(8px);
+}
+.exercise-scene, .division-scene, .summary-scene {
+  padding: 5vh 0 6vh;
+}
+.exercise-grid {
+  width: 85.3%;
+  gap: 1vw;
+}
+.exercise-table {
+  border: 2px solid #f6d190;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(5,6,8,.93), rgba(9,10,13,.91));
+  box-shadow: inset 0 0 0 1px rgba(255,255,230,.23), 0 0 9px rgba(255,197,88,.7), 0 0 28px rgba(255,173,56,.32), 0 18px 42px rgba(0,0,0,.72);
+}
+.table-title {
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, rgba(255,255,238,.5), transparent 29%, rgba(111,52,3,.12) 77%, rgba(255,255,220,.2)),
+    linear-gradient(90deg, #ba7629, #ffe4a1 24%, #fff0bf 47%, #f5c86b 76%, #af661e);
+  box-shadow: inset 0 2px rgba(255,250,220,.95), inset 0 -2px rgba(85,43,4,.45), 0 3px 12px rgba(255,179,60,.46);
+}
+.exercise-table h2 {
+  color: #0b0a09;
+  font-weight: 900;
+  text-shadow: 0 1px rgba(255,247,213,.6);
+}
+.exercise-table th {
+  color: #f3f5f7;
+  border-bottom: 1px solid rgba(231,235,240,.48);
+  background: rgba(4,5,8,.68);
+  font-weight: 800;
+}
+.exercise-table th:not(:last-child), .exercise-table td:not(:last-child) {
+  border-right: 1px solid rgba(207,215,226,.13);
+}
+.exercise-table td {
+  color: #f6f7f9;
+  border-bottom: 1px solid rgba(219,225,233,.22);
+  text-shadow: 0 1px 2px rgba(0,0,0,.85);
+}
+.exercise-table tbody tr:nth-child(even) td { background: rgba(209,218,229,.055); }
+.exercise-table tbody tr:first-child td { color: #ffdc83; }
+.exercise-table td:last-child, .exercise-table tbody tr:first-child td:last-child {
+  color: #ffd273;
+  text-shadow: 0 0 8px rgba(255,195,81,.33);
+}
+@media (max-width: 700px) {
+  .topbar { height: 116px; min-height: 116px; }
+  .board-shell { height: 1094px; }
+  .exercise-scene, .division-scene, .summary-scene { padding: 24px 2vw; }
+  .exercise-grid { width: 100%; gap: 12px; }
+}
+
+/* Scale the reference masthead and summary records for TV viewing. */
+.metal-logo { margin-left: 7.7vw; transform: translateY(2vh); }
+.topbar h1 { transform: translateY(1vh); }
+.clock { margin-right: 3.5vw; transform: translateY(1vh); }
+.summary-table td { font-size: clamp(20px, 1.6vw, 33px); }
+.summary-table td:first-child { font-size: clamp(15px, 1.2vw, 24px); }
+.summary-table td:last-child { font-size: clamp(19px, 1.48vw, 30px); }
+@media (max-width: 700px) {
+  .metal-logo { margin-left: 0; transform: none; }
+  .clock { margin-right: 0; transform: none; }
+  .topbar h1 { transform: none; }
+}
