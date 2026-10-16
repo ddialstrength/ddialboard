@@ -703,7 +703,7 @@ body::before {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 1px 1px rgba(0,0,0,.8))
-          drop-shadow(0 0 4px rgba(255,204,103,.28));
+          drop-shadow(0 0 6px rgba(255,210,113,.55));
 }
 .summary-scene tbody tr:first-child .summary-metal-text {
   filter: drop-shadow(0 1px 1px rgba(0,0,0,.8))
