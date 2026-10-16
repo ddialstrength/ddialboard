@@ -723,12 +723,10 @@ body::before {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: .55px rgba(255,229,160,.92);
-  text-shadow: 0 -1px 0 rgba(255,251,223,.7),
-               0 1px 0 rgba(103,61,18,.96),
-               0 2px 0 rgba(74,39,9,.9),
-               0 3px 3px rgba(0,0,0,.9);
-  filter: drop-shadow(0 0 3px rgba(255,212,117,.3));
+  text-shadow: none;
+  filter: none;
 }
 .slide:first-child .summary-table tbody tr:first-child .summary-metal-text {
-  filter: drop-shadow(0 0 5px rgba(255,223,141,.5));
+  text-shadow: none;
+  filter: none;
 }
