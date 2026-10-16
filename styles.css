@@ -697,15 +697,15 @@ body::before {
   display: inline-block;
   color: #f6d888;
   background: linear-gradient(180deg,
-    #fff9e8 0%, #fff3c3 15%, #e7b650 37%,
-    #fff2b7 51%, #bd842e 77%, #f7d77f 100%);
+    #fffbe9 0%, #ffe8a1 24%, #ffd371 42%,
+    #fffdf0 54%, #efbc59 76%, #ffe4a0 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 1px 1px rgba(44,26,5,.9))
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,.8))
           drop-shadow(0 0 4px rgba(255,204,103,.28));
 }
 .summary-scene tbody tr:first-child .summary-metal-text {
-  filter: drop-shadow(0 1px 1px rgba(44,26,5,.9))
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,.8))
           drop-shadow(0 0 6px rgba(255,210,113,.5));
 }
