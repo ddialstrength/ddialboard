@@ -711,3 +711,24 @@ body::before {
   filter: drop-shadow(0 1px 1px rgba(0,0,0,.8))
           drop-shadow(0 0 6px rgba(255,210,113,.5));
 }
+
+/* First slide only: faceted, beveled gold lettering inspired by the supplied alphabet. */
+.slide:first-child .summary-metal-text {
+  position: relative;
+  background: linear-gradient(165deg,
+    #fff9d9 0%, #fbe39e 17%, #a96825 31%,
+    #fff6c7 44%, #fff9db 53%, #d4993d 68%,
+    #714016 85%, #e7b866 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: .55px rgba(255,229,160,.92);
+  text-shadow: 0 -1px 0 rgba(255,251,223,.7),
+               0 1px 0 rgba(103,61,18,.96),
+               0 2px 0 rgba(74,39,9,.9),
+               0 3px 3px rgba(0,0,0,.9);
+  filter: drop-shadow(0 0 3px rgba(255,212,117,.3));
+}
+.slide:first-child .summary-table tbody tr:first-child .summary-metal-text {
+  filter: drop-shadow(0 0 5px rgba(255,223,141,.5));
+}
