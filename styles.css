@@ -667,10 +667,10 @@ body::before {
   text-shadow: 0 1px 2px rgba(0,0,0,.85);
 }
 .exercise-table tbody tr:nth-child(even) td { background: rgba(209,218,229,.055); }
-.exercise-table tbody tr:first-child td { color: #ffdc83; }
+.exercise-table tbody tr:first-child td { color: #F2F8FC; }
 .exercise-table td:last-child, .exercise-table tbody tr:first-child td:last-child {
-  color: #ffd273;
-  text-shadow: 0 0 8px rgba(255,195,81,.33);
+  color: #E2EEF7;
+  text-shadow: 0 0 8px rgba(205,228,245,.33);
 }
 @media (max-width: 700px) {
   .topbar { height: 116px; min-height: 116px; }
