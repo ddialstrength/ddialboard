@@ -38,11 +38,11 @@
   function table(lift, rows, summary = false) {
     return `<section class="exercise-table${summary ? ' summary-table' : ''}">
       <div class="table-title"><h2>${lift.title}</h2>${lift.note ? `<span>${lift.note}</span>` : ''}</div>
-      <table><thead><tr>${summary ? '<th><span class="summary-metal-text">CLASS</span></th><th><span class="summary-metal-text">LEADER</span></th><th><span class="summary-metal-text">PR</span></th>' : '<th>RANK</th><th>MEMBER</th><th>PR</th>'}</tr></thead>
+      <table><thead><tr>${summary ? '<th>CLASS</th><th>LEADER</th><th>PR</th>' : '<th>RANK</th><th>MEMBER</th><th>PR</th>'}</tr></thead>
       <tbody>${rows.map((entry, index) => `<tr>${summary
-        ? `<td><span class="summary-metal-text">${escapeHTML(entry.division)}</span></td><td><span class="summary-metal-text">${escapeHTML(entry.name)}</span></td>`
+        ? `<td>${escapeHTML(entry.division)}</td><td>${escapeHTML(entry.name)}</td>`
         : `<td><span class="rank-badge">${String(index + 1).padStart(2, '0')}</span></td><td>${escapeHTML(entry.name)}</td>`
-      }<td>${summary ? `<span class="summary-metal-text">${pounds(entry[lift.key])}</span>` : pounds(entry[lift.key])}</td></tr>`).join('')}</tbody></table>
+      }<td>${pounds(entry[lift.key])}</td></tr>`).join('')}</tbody></table>
     </section>`;
   }
 
