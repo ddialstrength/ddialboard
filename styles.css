@@ -715,10 +715,10 @@ body::before {
 /* First slide only: faceted, beveled gold lettering inspired by the supplied alphabet. */
 .slide:first-child .summary-metal-text {
   position: relative;
-  background: linear-gradient(165deg,
-    #fff9d9 0%, #fbe39e 17%, #a96825 31%,
-    #fff6c7 44%, #fff9db 53%, #d4993d 68%,
-    #714016 85%, #e7b866 100%);
+  background: linear-gradient(180deg,
+    #fff9d9 0%, #fbe39e 17%, #d5aa24 31%,
+    #fff6c7 44%, #fff9db 53%, #e4bb42 68%,
+    #b9910b 85%, #f0d268 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
