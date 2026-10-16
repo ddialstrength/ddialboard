@@ -712,8 +712,8 @@ body::before {
           drop-shadow(0 0 6px rgba(255,210,113,.5));
 }
 
-/* First slide only: sharp bevel and scaled 3D extrusion on editable table text. */
-.slide:first-child .summary-metal-text {
+/* Matching gold text finish on the first two Strength Board slides. */
+.slide:nth-child(-n+2) .summary-metal-text {
   position: relative;
   background: linear-gradient(180deg,
     #fff9d9 0%, #fbe39e 17%, #d5aa24 31%,
@@ -727,12 +727,12 @@ body::before {
   filter: drop-shadow(1px 1px 0 #8b701a)
           drop-shadow(1px 1px 0 #56420d);
 }
-.slide:first-child .summary-table thead .summary-metal-text {
+.slide:nth-child(-n+2) .summary-table thead .summary-metal-text {
   -webkit-text-stroke: .4px #ffe7a0;
   text-shadow: none;
   filter: drop-shadow(1px 1px 0 #56420d);
 }
-.slide:first-child .summary-table tbody tr:first-child .summary-metal-text {
+.slide:nth-child(-n+2) .summary-table tbody tr:first-child .summary-metal-text {
   filter: drop-shadow(1px 1px 0 #8b701a)
           drop-shadow(1px 1px 0 #56420d);
 }
