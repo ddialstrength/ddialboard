@@ -724,21 +724,14 @@ body::before {
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: .65px #ffe7a0;
   text-shadow:
-    .5px .5px 0 #fff3bf,
-    -.5px -.5px 0 #8b6c11,
-    1px 1px 0 #d6b23b,
-    1.5px 1.5px 0 #b99420,
-    2px 2px 0 #947412,
-    2.5px 2.5px 0 #6b520b,
-    3px 3px 3px rgba(0,0,0,.7);
+    1px 1px 0 #715714,
+    2px 2px 0 #4b3a10,
+    2.5px 2.5px 2px rgba(0,0,0,.72);
   filter: none;
 }
 .slide:first-child .summary-table thead .summary-metal-text {
   -webkit-text-stroke: .4px #ffe7a0;
-  text-shadow:
-    .5px .5px 0 #fff3bf,
-    1px 1px 0 #b99420,
-    1.5px 1.5px 1px rgba(0,0,0,.6);
+  text-shadow: 1px 1px 1px rgba(0,0,0,.7);
 }
 .slide:first-child .summary-table tbody tr:first-child .summary-metal-text {
   filter: none;
