@@ -635,10 +635,10 @@ body::before {
   gap: 1vw;
 }
 .exercise-table {
-  border: 2px solid #f6d190;
+  border: 2px solid #DCE7EF;
   border-radius: 12px;
   background: linear-gradient(180deg, rgba(5,6,8,.93), rgba(9,10,13,.91));
-  box-shadow: inset 0 0 0 1px rgba(255,255,230,.23), 0 0 9px rgba(255,197,88,.7), 0 0 28px rgba(255,173,56,.32), 0 18px 42px rgba(0,0,0,.72);
+  box-shadow: inset 0 0 0 1px rgba(245,250,255,.3), 0 0 9px rgba(210,230,245,.7), 0 0 28px rgba(175,205,230,.35), 0 18px 42px rgba(0,0,0,.72);
 }
 .table-title {
   background:
