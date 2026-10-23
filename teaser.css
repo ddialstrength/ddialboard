@@ -1,0 +1,58 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { width: 100%; min-height: 100%; margin: 0; }
+body { background: #050506; color: #f5f6f7; font-family: Arial, Helvetica, sans-serif; overflow: hidden; }
+.screen { position: fixed; inset: 0; display: grid; place-items: center; overflow: hidden; }
+.poster { position: relative; width: min(100vw, 177.6833vh); aspect-ratio: 1672 / 941; overflow: hidden; background: #050506; isolation: isolate; }
+.poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; user-select: none; }
+.poster-base { filter: brightness(.19) blur(2px); opacity: 0; }
+.poster-piece { opacity: 0; will-change: opacity, transform; }
+.photo { clip-path: polygon(32% 0, 100% 0, 100% 76%, 59% 76%, 59% 35%, 32% 35%); }
+.logo { clip-path: inset(0 65% 66% 0); }
+.strength { clip-path: inset(33.5% 42% 51.6% 0); transform-origin: 28% 41%; }
+.competition { clip-path: inset(47.6% 42% 40.5% 0); transform-origin: 29% 53%; }
+.question { clip-path: inset(58.2% 37% 28.7% 4%); transform-origin: 33% 64%; }
+.bench { clip-path: inset(70.7% 65.5% 22.2% 13.5%); transform-origin: 24% 74%; }
+.squat { clip-path: inset(70.7% 52.7% 22.2% 34.5%); transform-origin: 41% 74%; }
+.row { clip-path: inset(70.7% 14% 22.2% 47.3%); transform-origin: 67% 74%; }
+.date { clip-path: inset(77.1% 0 12.9% 0); }
+.instructions { clip-path: inset(86.3% 0 6.9% 0); transform-origin: 8% 90%; }
+.badge { clip-path: inset(91.2% 0 0 0); }
+.poster-finish { opacity: 0; }
+.is-playing .poster-base { animation: backgroundIn 1.35s ease-out both; }
+.is-playing .photo { animation: imageIn 1.5s .18s ease-out both; }
+.is-playing .logo { animation: imageIn .95s 1.05s ease-out both; }
+.is-playing .strength { animation: titleHit .48s 1.95s cubic-bezier(.16,.84,.24,1) both; }
+.is-playing .competition { animation: titleHit .48s 2.32s cubic-bezier(.16,.84,.24,1) both; }
+.is-playing .question { animation: imageIn .55s 3.72s ease-out both; }
+.is-playing .bench { animation: exerciseDrop .46s 4.33s cubic-bezier(.18,.78,.2,1) both; }
+.is-playing .squat { animation: exerciseDrop .46s 4.61s cubic-bezier(.18,.78,.2,1) both; }
+.is-playing .row { animation: exerciseDrop .5s 4.89s cubic-bezier(.18,.78,.2,1) both; }
+.is-playing .date { animation: imageIn .9s 6.66s ease-out both; }
+.is-playing .instructions { animation: typeReveal 1.25s 7.7s steps(44,end) both; }
+.is-playing .badge { animation: imageIn .75s 8.75s ease-out both; }
+.is-playing .poster-finish { animation: imageIn .4s 9.5s ease-in both; }
+@keyframes backgroundIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes imageIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes titleHit {
+  0% { opacity: 0; transform: scale(.035); filter: blur(9px) brightness(1.8); }
+  72% { opacity: 1; transform: scale(1.075); filter: blur(0) brightness(1.35); }
+  100% { opacity: 1; transform: scale(1); filter: none; }
+}
+@keyframes exerciseDrop {
+  0% { opacity: 0; transform: translateY(-3%) scale(1.52); filter: blur(5px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: none; }
+}
+@keyframes typeReveal {
+  0% { opacity: 1; clip-path: inset(86.3% 100% 6.9% 0); }
+  100% { opacity: 1; clip-path: inset(86.3% 0 6.9% 0); }
+}
+.replay { position: fixed; z-index: 5; right: max(14px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: .55em; border: 1px solid #afb5bd; border-radius: 999px; padding: .55em .75em; background: rgba(5,6,7,.83); color: #eff2f5; font: 700 clamp(11px, .9vw, 15px)/1 Arial, sans-serif; letter-spacing: .09em; cursor: pointer; opacity: .7; transition: opacity .2s, background .2s; }
+.replay:hover, .replay:focus-visible { opacity: 1; background: #15191c; outline-color: #fff; }
+.replay-icon { font-size: 1.5em; line-height: .7; }
+.remaining { min-width: 3.1em; font-variant-numeric: tabular-nums; letter-spacing: 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .poster-base, .poster-piece { display: none; }
+  .poster-finish, .is-playing .poster-finish { opacity: 1; animation: none; }
+}

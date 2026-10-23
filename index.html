@@ -3,37 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#08090b">
-  <meta name="description" content="D’Dial Fitness Club strength leaderboard design preview with demo data.">
-  <title>D’Dial Fitness Club — Leaderboard Preview</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Inter:wght@500;600;700;800&family=Oswald:wght@500;600;700&family=Roboto+Condensed:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=silver-2">
+  <meta name="theme-color" content="#050506">
+  <meta name="description" content="D’Dial Fitness Club strength competition starts November 1st. Bench press, squat and chest-supported row. For bragging rights.">
+  <title>D’Dial Fitness Club — Strength Competition</title>
+  <link rel="preload" as="image" href="assets/strength-competition-exact.webp">
+  <link rel="stylesheet" href="teaser.css?v=2">
 </head>
 <body>
-  <video id="arenaVideo" class="arena-video" autoplay muted loop playsinline preload="metadata" poster="assets/ddial-arena-poster.jpg" aria-hidden="true" tabindex="-1">
-    <source src="assets/ddial-arena-background-720p.webm" type="video/webm">
-    <source src="assets/ddial-arena-background-720p.mp4" type="video/mp4">
-  </video>
-  <video id="sparksVideo" class="sparks-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
-    <source src="assets/arena-sparks-720p.mp4" type="video/mp4">
-  </video>
-  <header class="topbar">
-    <div class="metal-logo" role="img" aria-label="D’Dial Fitness Club logo"></div>
-    <h1 id="slideTitle">WOMEN · STRENGTH BOARD</h1>
-    <time class="clock" id="clock">--:--</time>
-  </header>
-  <main class="board-shell"><div id="slideStage" class="slide-stage" aria-live="polite"></div></main>
-  <footer class="footer-bar"><span id="slideLabel">DEMO DATA · 1 / 10</span><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></footer>
-  <div class="control-panel" id="controls" aria-label="Leaderboard controls">
-    <button class="control-btn" id="prevBtn" title="Previous slide" aria-label="Previous slide">‹</button>
-    <button class="control-btn" id="pauseBtn" title="Pause playback" aria-label="Pause playback">Ⅱ</button>
-    <button class="control-btn" id="nextBtn" title="Next slide" aria-label="Next slide">›</button>
-    <button class="control-btn" id="fullscreenBtn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
-  </div>
-  <script src="assets/records.js?v=b493afd3"></script>
-  <script src="app.js?v=gold-board-1"></script>
+  <main class="screen">
+    <h1 class="visually-hidden">D’Dial Fitness Club Strength Competition</h1>
+    <p class="visually-hidden">Who has the best bench press, squat, or chest-supported row? Starts November 1st. Train, challenge a record, and ask a trainer for an official attempt. For bragging rights.</p>
+    <div class="poster is-playing" id="poster" role="img" aria-label="D’Dial Fitness Club Strength Competition. Who has the best bench press, squat, or chest-supported row? Starts November 1st. Train. Challenge a record. Ask a trainer for an official attempt. For bragging rights.">
+      <img class="poster-base" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece photo" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece logo" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece strength" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece competition" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece question" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece bench" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece squat" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece row" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece date" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece instructions" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-piece badge" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+      <img class="poster-finish" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+    </div>
+    <button class="replay" id="replay" type="button" aria-label="Replay animation and restart the five-minute timer" title="Replay animation and restart the five-minute timer">
+      <span class="replay-icon" aria-hidden="true">↻</span> REPLAY <span id="remaining" class="remaining">05:00</span>
+    </button>
+  </main>
+  <script src="teaser.js?v=2"></script>
 </body>
 </html>
-
