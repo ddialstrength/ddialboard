@@ -6,32 +6,37 @@
   <meta name="theme-color" content="#050506">
   <meta name="description" content="D’Dial Fitness Club strength competition starts November 1st. Bench press, squat and chest-supported row. For bragging rights.">
   <title>D’Dial Fitness Club — Strength Competition</title>
-  <link rel="preload" as="image" href="assets/strength-competition-exact.webp">
-  <link rel="stylesheet" href="teaser.css?v=4">
+  <link rel="preload" as="image" href="assets/strength-competition-background.webp">
+  <link rel="preload" as="image" href="assets/ddial-official-logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="teaser.css?v=6">
 </head>
 <body>
   <main class="screen">
-    <h1 class="visually-hidden">D’Dial Fitness Club Strength Competition</h1>
-    <p class="visually-hidden">Who has the best bench press, squat, or chest-supported row? Starts November 1st. Train, challenge a record, and ask a trainer for an official attempt. For bragging rights.</p>
-    <div class="poster is-playing" id="poster" role="img" aria-label="D’Dial Fitness Club Strength Competition. Who has the best bench press, squat, or chest-supported row? Starts November 1st. Train. Challenge a record. Ask a trainer for an official attempt. For bragging rights.">
-      <img class="poster-base" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece photo" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece logo" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece strength" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece competition" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece question" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece bench" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece squat" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece row" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece date" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece instructions" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-piece badge" src="assets/strength-competition-exact.webp" alt="" draggable="false">
-      <img class="poster-finish" src="assets/strength-competition-exact.webp" alt="" draggable="false">
+    <article class="poster is-playing" id="poster" aria-label="D’Dial strength competition teaser">
+      <img class="poster-background" src="assets/strength-competition-background.webp" alt="" draggable="false">
+      <header class="poster-header">
+        <img class="brand-logo" src="assets/ddial-official-logo.webp" alt="D’Dial Fitness Club" draggable="false">
+        <time class="clock" id="clock" aria-label="Current time">--:--</time>
+      </header>
+      <section class="hero-copy" aria-label="Strength competition">
+        <h1 class="hero-title"><span class="strength">STRENGTH</span><span class="competition">COMPETITION</span></h1>
+        <p class="question">WHO HAS THE BEST?</p>
+        <div class="lifts" aria-label="Competition lifts"><span>BENCH PRESS</span><b aria-hidden="true">/</b><span>SQUAT</span><b aria-hidden="true">/</b><span>CHEST-SUPPORTED ROW</span></div>
+      </section>
+      <section class="poster-footer" aria-label="Competition details">
+        <p class="date">STARTS NOVEMBER 1ST</p>
+        <p class="instructions">TRAIN. CHALLENGE A RECORD. ASK A TRAINER FOR AN OFFICIAL ATTEMPT.</p>
+        <p class="badge">FOR BRAGGING RIGHTS</p>
+      </section>
+    </article>
+    <div class="controls" aria-label="Teaser controls">
+      <button class="control" id="replay" type="button" aria-label="Replay animation and restart the five-minute timer" title="Replay animation and restart the five-minute timer"><span aria-hidden="true">↻</span> REPLAY <span id="remaining" class="remaining">05:00</span></button>
+      <button class="control fullscreen" id="fullscreen" type="button" aria-label="Enter fullscreen" title="Enter fullscreen">⛶</button>
     </div>
-    <button class="replay" id="replay" type="button" aria-label="Replay animation and restart the five-minute timer" title="Replay animation and restart the five-minute timer">
-      <span class="replay-icon" aria-hidden="true">↻</span> REPLAY <span id="remaining" class="remaining">05:00</span>
-    </button>
   </main>
-  <script src="teaser.js?v=2"></script>
+  <script src="teaser.js?v=3"></script>
 </body>
 </html>
