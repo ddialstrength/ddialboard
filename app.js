@@ -16,11 +16,14 @@
     { key: 'squat', title: 'SQUAT' },
     { key: 'row', title: 'CHEST-SUPPORTED ROW', note: '3 CLEAN REPS' }
   ];
+  const hasResult = (athlete, key) => Number.isFinite(athlete[key]) && athlete[key] > 0;
+  const byLift = key => (a, b) => b[key] - a[key] || a.name.localeCompare(b.name);
+  const leaders = (item, key) => item.athletes.filter(athlete => hasResult(athlete, key)).sort(byLift(key));
+  const populated = records.filter(item => lifts.some(lift => leaders(item, lift.key).length));
   const slides = [
-    { type: 'summary', sex: 'female' },
-    { type: 'summary', sex: 'male' },
-    ...records.filter(item => item.sex === 'female').map(item => ({ type: 'division', item })),
-    ...records.filter(item => item.sex === 'male').map(item => ({ type: 'division', item }))
+    { type: 'intro' },
+    ...['female', 'male'].flatMap(sex => populated.filter(item => item.sex === sex).length > 1 ? [{ type: 'summary', sex }] : []),
+    ...populated.map(item => ({ type: 'division', item }))
   ];
   let current = 0;
   let timer;
@@ -33,7 +36,6 @@
   }[char]));
   const pounds = value => `${Number(value).toLocaleString('en-US')} LB`;
   const label = sex => sex === 'male' ? 'MEN' : 'WOMEN';
-  const byLift = key => (a, b) => Number(b[key]) - Number(a[key]) || a.name.localeCompare(b.name);
 
   function table(lift, rows, summary = false) {
     return `<section class="exercise-table${summary ? ' summary-table' : ''}">
@@ -41,49 +43,65 @@
       <table><thead><tr>${summary ? '<th>CLASS</th><th>LEADER</th><th>PR</th>' : '<th>RANK</th><th>MEMBER</th><th>PR</th>'}</tr></thead>
       <tbody>${rows.map((entry, index) => `<tr>${summary
         ? `<td>${escapeHTML(entry.division)}</td><td>${escapeHTML(entry.name)}</td>`
-        : `<td><span class="rank-badge">${String(index + 1).padStart(2, '0')}</span></td><td>${escapeHTML(entry.name)}</td>`
+        : `<td><span class="rank-badge">${String(index + 1).padStart(2, '0')}</span></td><td><span class="member-name">${escapeHTML(entry.name)}</span></td>`
       }<td>${pounds(entry[lift.key])}</td></tr>`).join('')}</tbody></table>
     </section>`;
   }
 
   function renderDivision(item) {
-    return `<div class="scene exercise-scene division-scene"><div class="exercise-grid">${lifts.map(lift =>
-      table(lift, [...item.athletes].sort(byLift(lift.key)).slice(0, 4))
+    const activeLifts = lifts.filter(lift => leaders(item, lift.key).length);
+    return `<div class="scene exercise-scene division-scene"><div class="exercise-grid${activeLifts.length === 1 ? ' single-table' : ''}" data-count="${activeLifts.length}">${activeLifts.map(lift =>
+      table(lift, leaders(item, lift.key).slice(0, 4))
     ).join('')}</div></div>`;
   }
 
   function renderSummary(sex) {
-    const divisions = records.filter(item => item.sex === sex);
-    return `<div class="scene exercise-scene summary-scene"><div class="exercise-grid">${lifts.map(lift =>
-      table(lift, divisions.map(item => ({ ...[...item.athletes].sort(byLift(lift.key))[0], division: item.division })), true)
+    const divisions = populated.filter(item => item.sex === sex);
+    const activeLifts = lifts.filter(lift => divisions.some(item => leaders(item, lift.key).length));
+    return `<div class="scene exercise-scene summary-scene"><div class="exercise-grid${activeLifts.length === 1 ? ' single-table' : ''}" data-count="${activeLifts.length}">${activeLifts.map(lift =>
+      table(lift, divisions.filter(item => leaders(item, lift.key).length).map(item => ({ ...leaders(item, lift.key)[0], division: item.division })), true)
     ).join('')}</div></div>`;
   }
 
+  function renderIntro() {
+    return `<div class="scene intro-scene">
+      <div class="intro-copy">
+        <p class="intro-eyebrow">MEMBERS · THE CHALLENGE IS ON</p>
+        <h2><span>TEST YOUR</span><span>STRENGTH.</span></h2>
+        <p class="intro-challenge">THE BOARD IS YOURS TO BEAT.</p>
+        <p class="intro-lifts">BENCH PRESS <i aria-hidden="true">/</i> SQUAT <i aria-hidden="true">/</i> CHEST-SUPPORTED ROW</p>
+        <p class="intro-action">ASK A TRAINER FOR AN OFFICIAL ATTEMPT.</p>
+        <p class="intro-rights">FOR BRAGGING RIGHTS</p>
+      </div>
+    </div>`;
+  }
+
   function titleFor(slide) {
-    return slide.type === 'division'
+    return slide.type === 'intro' ? 'STRENGTH COMPETITION' : slide.type === 'division'
       ? `${label(slide.item.sex)} · ${slide.item.division.toUpperCase()}`
       : `${label(slide.sex)} · STRENGTH BOARD`;
   }
 
   function buildSlides() {
-    stage.innerHTML = slides.map((slide, index) => `<section class="slide${index === 0 ? ' active' : ''}" aria-label="${escapeHTML(titleFor(slide))}" ${index === 0 ? '' : 'aria-hidden="true"'}>${slide.type === 'division' ? renderDivision(slide.item) : renderSummary(slide.sex)}</section>`).join('');
+    stage.innerHTML = slides.map((slide, index) => `<section class="slide${index === 0 ? ' active' : ''}" aria-label="${escapeHTML(titleFor(slide))}" ${index === 0 ? '' : 'aria-hidden="true"'}>${slide.type === 'intro' ? renderIntro() : slide.type === 'division' ? renderDivision(slide.item) : renderSummary(slide.sex)}</section>`).join('');
+    document.body.classList.toggle('single-slide', slides.length === 1);
     updateLabels();
   }
 
   function updateLabels() {
     const title = titleFor(slides[current]);
-    document.body.dataset.sex = slides[current].type === 'division' ? slides[current].item.sex : slides[current].sex;
+    document.body.dataset.sex = slides[current].type === 'division' ? slides[current].item.sex : slides[current].type === 'intro' ? 'intro' : slides[current].sex;
     const heading = document.getElementById('slideTitle');
     heading.textContent = title;
     heading.classList.remove('title-enter');
     void heading.offsetWidth;
     heading.classList.add('title-enter');
-    slideLabel.textContent = `DEMO DATA · ${current + 1} / ${slides.length}`;
+    slideLabel.textContent = `${current + 1} / ${slides.length}`;
   }
 
   function schedule() {
     clearTimeout(timer);
-    if (!paused) timer = setTimeout(() => goTo(current + 1), INTERVAL_MS);
+    if (!paused && slides.length > 1) timer = setTimeout(() => goTo(current + 1), INTERVAL_MS);
   }
 
   function goTo(index) {

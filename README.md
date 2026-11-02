@@ -1,14 +1,11 @@
-# D’Dial leaderboard design preview
+# D’Dial Strength Board
 
-Open `index.html` in a browser. This preview contains 10 slides: four women’s weight classes, four men’s weight classes, and a Strength Board summary for each sex. Each weight-class slide has separate Bench Press, Squat, and Chest-Supported Row tables, with the top four for each exercise. Each summary shows one leader from each weight class per exercise. It runs from local files without a server. Pause and use the arrows at the bottom right to inspect each slide.
+`index.html` rotates an opening invitation and the current results over the same arena artwork. Only weight classes and exercise tables with a recorded result appear. The old November 1 announcement remains archived at `teaser.html`.
 
-## Update the demo athletes
+## Updating results
 
-Edit `assets/records.js`. Each division has ten `athletes`. For each athlete, edit `name`, `bench`, `squat`, and `row`. All loads are in **pounds**. Bench and squat are single-rep records. Row is the heaviest load completed for **three clean reps** on the same chest-supported row machine, with the same setup and a controlled return on every rep. The browser ranks each exercise independently within its weight class, shows the top four, and picks each class leader for the Strength Board. Equal loads are ordered alphabetically by name; decide a competition tie-break rule before using real results. No combined total is calculated.
+Edit `assets/records.js`. Add a contestant once in the correct division with their name and the verified load in `bench`, `squat`, or `row`. Leave an unattempted exercise as `null`. Loads are pounds. The display ranks each exercise independently and shows up to four contestants per division. When at least two weight classes have results for one sex, a Strength Board summary appears for that sex. Keep precise weigh-ins in staff records, outside this public repository.
 
-The old optional `photo` fields remain in the data for future use but are not displayed in these tables. The row numbers are new fictional sample loads, not converted deadlift records. Replace the demo names and all numbers with checked results before any public deployment. The visible `DEMO DATA` label marks this version as a preview.
+Maya Cross-Lovelace is entered in the women’s 155–187 lb division with a 140 lb bench press. Her exact weigh-in is intentionally omitted. Clarify the upper and lower limits for every division before accepting future borderline weigh-ins.
 
-The weight class labels are editable in the same file. For this preview they use round pound boundaries: women under 120, 120–154, 155–187, 188+; men under 150, 150–187, 188–220, 221+. Confirm class boundaries before using real results.
-
-The arena background, logo, clock, female pink glow, and male blue glow remain. All three tables use the same silver metallic styling; the first-place row uses restrained gold text. The prior podium artwork is retained in `assets/` but is not used by the new table layout.
-
+Use a consistent staff verification process before posting new records. For the chest-supported row, the board currently labels an attempt as three clean reps; confirm that standard with the trainers before entering a row result. Do not fill missing results with zero.

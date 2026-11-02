@@ -691,3 +691,118 @@ body::before {
   .clock { margin-right: 0; transform: none; }
   .topbar h1 { transform: none; }
 }
+
+/* Verified results: only populated divisions and exercises appear. */
+.official-logo {
+  display: block;
+  width: min(100%, 360px);
+  max-height: 100%;
+  object-fit: contain;
+  margin-inline-start: 3vw;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.65));
+}
+.exercise-grid[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.exercise-grid.single-table {
+  width: min(64%, 1050px);
+  height: min(49vh, 500px);
+  grid-template-columns: minmax(0, 1fr);
+  margin: auto;
+  align-self: center;
+}
+.single-table .exercise-table { height: 100%; }
+.single-table .exercise-table td { font-size: clamp(27px, 2.5vw, 46px); }
+.single-table .exercise-table th { font-size: clamp(15px, 1.2vw, 22px); }
+.single-table .exercise-table tbody tr { height: auto; }
+.member-name { display: block; }
+body.single-slide .progress-track, body.single-slide #prevBtn, body.single-slide #nextBtn,
+body.single-slide #pauseBtn { display: none; }
+@media (max-width: 700px) {
+  .official-logo { width: 100%; margin-inline-start: 0; }
+  .exercise-grid.single-table { width: 100%; height: 420px; display: block; }
+  .single-table .exercise-table td { font-size: clamp(18px, 4.5vw, 25px); }
+}
+
+/* Opening invitation shares the arena artwork, logo and clock with the results. */
+.intro-scene {
+  display: grid;
+  place-items: center;
+  padding: 2vh 5vw 6vh;
+  text-align: center;
+}
+.intro-copy { width: min(100%, 1120px); margin-inline: auto; }
+.intro-eyebrow {
+  margin: 0 0 1.2vh;
+  color: #e5ecf2;
+  font: 800 clamp(17px, 1.65vw, 32px)/1 var(--ui);
+  letter-spacing: .2em;
+  text-shadow: none;
+}
+.intro-copy h2 {
+  margin: 0;
+  color: #f8fbfd;
+  font: 700 clamp(64px, 7vw, 142px)/.92 var(--display);
+  letter-spacing: .015em;
+  text-shadow: none;
+  filter: drop-shadow(0 0 12px rgba(226,243,255,.45));
+}
+.intro-copy h2 span {
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+  color: #fff;
+  background: linear-gradient(180deg,#fff 0%,#e8f2f8 28%,#fdfefe 52%,#d5e2eb 76%,#fff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: .6px #f2f9ff;
+}
+.intro-challenge {
+  margin: 2.2vh 0 2.7vh;
+  color: #f8d597;
+  font: 800 clamp(25px, 2.7vw, 54px)/1.1 var(--records);
+  letter-spacing: .08em;
+  text-shadow: 0 0 15px rgba(246,196,110,.38);
+}
+.intro-lifts {
+  margin: 0;
+  padding-block: 1.5vh;
+  border-block: 1px solid rgba(235,243,249,.65);
+  color: #f4f8fb;
+  font: 800 clamp(18px, 1.9vw, 38px)/1.18 var(--records);
+  letter-spacing: .045em;
+  text-shadow: none;
+}
+.intro-lifts i { padding-inline: .35em; color: #88bfe8; font-style: normal; }
+.intro-action {
+  display: inline-block;
+  margin: 3vh 0 0;
+  padding: .5em 1.2em;
+  border: 1px solid #d7e4ee;
+  color: #fff;
+  background: linear-gradient(90deg,rgba(13,22,32,.92),rgba(40,65,83,.87),rgba(13,22,32,.92));
+  box-shadow: inset 0 1px rgba(255,255,255,.3),0 0 16px rgba(115,181,234,.34),0 12px 24px #0009;
+  font: 800 clamp(19px, 2.1vw, 40px)/1.1 var(--records);
+  letter-spacing: .045em;
+}
+.intro-rights {
+  margin: 2vh 0 0;
+  color: #dce6ee;
+  font: 700 clamp(15px, 1.2vw, 24px)/1 var(--ui);
+  letter-spacing: .21em;
+}
+.slide.active .intro-copy > * { animation: introAppear .55s ease-out both; }
+.slide.active .intro-copy > :nth-child(2) { animation-delay: .2s; }
+.slide.active .intro-copy > :nth-child(3) { animation-delay: .48s; }
+.slide.active .intro-copy > :nth-child(4) { animation-delay: .68s; }
+.slide.active .intro-copy > :nth-child(5) { animation-delay: .9s; }
+.slide.active .intro-copy > :nth-child(6) { animation-delay: 1.08s; }
+@keyframes introAppear { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 700px) {
+  .intro-scene { padding: 22px 6vw; }
+  .intro-copy h2 { font-size: clamp(51px, 12vw, 84px); }
+  .intro-lifts { line-height: 1.5; }
+  .intro-action { font-size: clamp(18px, 4vw, 25px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide.active .intro-copy > * { animation: none; }
+}
