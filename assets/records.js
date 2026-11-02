@@ -16,7 +16,7 @@ window.records = [
   {
     sex: "male", division: "188–220 lb",
     athletes: [
-      { name: "Ancir Russell", bench: 225, squat: null, row: null }
+      { name: "Ancir Russell", bench: 245, squat: null, row: null }
     ]
   },
   { sex: "male", division: "221 lb+", athletes: [] }
