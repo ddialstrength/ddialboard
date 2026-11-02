@@ -5,6 +5,8 @@
   const progressBar = document.getElementById('progressBar');
   const clock = document.getElementById('clock');
   const pauseBtn = document.getElementById('pauseBtn');
+  const refreshBtn = document.getElementById('refreshBtn');
+  const refreshStatus = document.getElementById('refreshStatus');
   const controls = document.getElementById('controls');
   const arenaVideo = document.getElementById('arenaVideo');
   const sparksVideo = document.getElementById('sparksVideo');
@@ -19,12 +21,14 @@
   const hasResult = (athlete, key) => Number.isFinite(athlete[key]) && athlete[key] > 0;
   const byLift = key => (a, b) => b[key] - a[key] || a.name.localeCompare(b.name);
   const leaders = (item, key) => item.athletes.filter(athlete => hasResult(athlete, key)).sort(byLift(key));
-  const populated = records.filter(item => lifts.some(lift => leaders(item, lift.key).length));
-  const slides = [
+  let records = window.records;
+  let populated = records.filter(item => lifts.some(lift => leaders(item, lift.key).length));
+  const makeSlides = () => [
     { type: 'intro' },
     ...['female', 'male'].flatMap(sex => populated.filter(item => item.sex === sex).length > 1 ? [{ type: 'summary', sex }] : []),
     ...populated.map(item => ({ type: 'division', item }))
   ];
+  let slides = makeSlides();
   let current = 0;
   let timer;
   let ticker;
@@ -156,8 +160,35 @@
     });
   }
 
+  function refreshRecords() {
+    if (refreshBtn.disabled) return;
+    refreshBtn.disabled = true;
+    refreshStatus.textContent = 'Checking for updated results';
+    const script = document.createElement('script');
+    script.src = `assets/records.js?refresh=${Date.now()}`;
+    script.onload = () => {
+      script.remove();
+      records = window.records;
+      populated = records.filter(item => lifts.some(lift => leaders(item, lift.key).length));
+      slides = makeSlides();
+      current = 0;
+      buildSlides();
+      startedAt = Date.now();
+      schedule();
+      refreshBtn.disabled = false;
+      refreshStatus.textContent = 'Board updated with latest published results';
+    };
+    script.onerror = () => {
+      script.remove();
+      refreshBtn.disabled = false;
+      refreshStatus.textContent = 'Could not load updated results. Try again.';
+    };
+    document.head.appendChild(script);
+  }
+
   document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
   document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+  refreshBtn.addEventListener('click', refreshRecords);
   pauseBtn.addEventListener('click', () => setPaused(!paused));
   document.getElementById('fullscreenBtn').addEventListener('click', async () => {
     try {

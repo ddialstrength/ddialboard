@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Inter:wght@500;600;700;800&family=Oswald:wght@500;600;700&family=Roboto+Condensed:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=challenge-3">
+  <link rel="stylesheet" href="styles.css?v=challenge-4">
 </head>
 <body>
   <video id="arenaVideo" class="arena-video" autoplay muted loop playsinline preload="metadata" poster="assets/ddial-arena-poster.jpg" aria-hidden="true" tabindex="-1">
@@ -25,14 +25,16 @@
     <time class="clock" id="clock">--:--</time>
   </header>
   <main class="board-shell"><div id="slideStage" class="slide-stage" aria-live="polite"></div></main>
-  <footer class="footer-bar"><span id="slideLabel">1 / 2</span><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></footer>
+  <footer class="footer-bar"><span id="slideLabel">1 / 3</span><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></footer>
   <div class="control-panel" id="controls" aria-label="Leaderboard controls">
     <button class="control-btn" id="prevBtn" title="Previous slide" aria-label="Previous slide">‹</button>
     <button class="control-btn" id="pauseBtn" title="Pause playback" aria-label="Pause playback">Ⅱ</button>
     <button class="control-btn" id="nextBtn" title="Next slide" aria-label="Next slide">›</button>
+    <button class="control-btn refresh-btn" id="refreshBtn" title="Load latest published records" aria-label="Refresh board records">↻</button>
     <button class="control-btn" id="fullscreenBtn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
   </div>
-  <script src="assets/records.js?v=challenge-2"></script>
-  <script src="app.js?v=challenge-3"></script>
+  <span id="refreshStatus" class="visually-hidden" role="status" aria-live="polite"></span>
+  <script src="assets/records.js?v=challenge-4"></script>
+  <script src="app.js?v=challenge-4"></script>
 </body>
 </html>

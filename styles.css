@@ -106,10 +106,13 @@ body::after {
 .footer-bar { position: relative; z-index: 3; height: 5.5vh; display: flex; align-items: center; justify-content: space-between; padding: 0 3.5vw; color: #d1d1d0; font: 800 clamp(11px, 1vw, 20px)/1 var(--ui); letter-spacing: .15em; }
 .progress-track { width: min(26vw, 360px); height: 4px; border-radius: 8px; background: #686d73; overflow: hidden; }
 .progress-bar { display: block; width: 100%; height: 100%; transform-origin: left; transform: scaleX(0); background: var(--gold); }
-.control-panel { position: fixed; z-index: 20; right: 2vw; bottom: 5vh; display: flex; gap: 7px; padding: 6px; border: 1px solid #666b70; border-radius: 999px; background: #08090be8; opacity: .2; transition: opacity .2s; }
+.control-panel { position: fixed; z-index: 20; right: 2vw; bottom: 5vh; display: flex; gap: 7px; padding: 6px; border: 1px solid #666b70; border-radius: 999px; background: #08090be8; opacity: .66; transition: opacity .2s; }
 .control-panel:hover, .control-panel:focus-within { opacity: 1; }
 .control-btn { cursor: pointer; width: 35px; height: 35px; border-radius: 50%; border: 1px solid #787d82; background: #212326; color: #f3f3f3; font: 700 21px/1 var(--ui); }
 .control-btn:hover { color: var(--gold); border-color: var(--gold); }
+.refresh-btn { border-color: #b8d2e8; color: #e9f5ff; }
+.refresh-btn:disabled { cursor: wait; opacity: .6; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 @media (max-width: 1050px) {
   .topbar { grid-template-columns: 19% 1fr 18%; }
   .winner-lifts { display: none; }
