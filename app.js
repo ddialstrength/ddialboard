@@ -1,5 +1,6 @@
 (() => {
   const INTERVAL_MS = 20_000;
+  const INFO_INTERVAL_MS = 28_000;
   const stage = document.getElementById('slideStage');
   const slideLabel = document.getElementById('slideLabel');
   const progressBar = document.getElementById('progressBar');
@@ -16,7 +17,7 @@
   const lifts = [
     { key: 'bench', title: 'BENCH PRESS' },
     { key: 'squat', title: 'SQUAT' },
-    { key: 'row', title: 'CHEST-SUPPORTED ROW', note: '3 CLEAN REPS' }
+    { key: 'row', title: 'CHEST-SUPPORTED ROW' }
   ];
   const hasResult = (athlete, key) => Number.isFinite(athlete[key]) && athlete[key] > 0;
   const byLift = key => (a, b) => b[key] - a[key] || a.name.localeCompare(b.name);
@@ -25,6 +26,8 @@
   let populated = records.filter(item => lifts.some(lift => leaders(item, lift.key).length));
   const makeSlides = () => [
     { type: 'intro' },
+    { type: 'how' },
+    { type: 'rules' },
     ...['female', 'male'].flatMap(sex => populated.filter(item => item.sex === sex).length > 1 ? [{ type: 'summary', sex }] : []),
     ...populated.map(item => ({ type: 'division', item }))
   ];
@@ -40,6 +43,7 @@
   }[char]));
   const pounds = value => `${Number(value).toLocaleString('en-US')} LB`;
   const label = sex => sex === 'male' ? 'MEN' : 'WOMEN';
+  const slideDuration = () => ['how', 'rules'].includes(slides[current].type) ? INFO_INTERVAL_MS : INTERVAL_MS;
 
   function table(lift, rows, summary = false) {
     return `<section class="exercise-table${summary ? ' summary-table' : ''}">
@@ -80,21 +84,43 @@
     </div>`;
   }
 
+  function renderHow() {
+    return `<div class="scene info-scene how-scene"><ol class="info-steps">
+      <li><span class="info-number">01</span><span>Be a D’Dial Fitness Club member.</span></li>
+      <li><span class="info-number">02</span><span>Ask a floor instructor for an official attempt.</span></li>
+      <li><span class="info-number">03</span><span>Weigh in without shoes before warming up.</span></li>
+      <li><span class="info-number">04</span><span>Warm up and complete up to three attempts.</span></li>
+      <li><span class="info-number">05</span><span>The instructor verifies the result before it is recorded.</span></li>
+    </ol></div>`;
+  }
+
+  function renderRules() {
+    return `<div class="scene info-scene rules-scene"><ul class="info-rules">
+      <li>Bench Press <span aria-hidden="true">·</span> Squat <span aria-hidden="true">·</span> Chest-Supported Row</li>
+      <li>Men’s and women’s bodyweight divisions</li>
+      <li>Three attempts per official session</li>
+      <li>Technique and safety supervised by floor instructors</li>
+      <li>Only verified results count</li>
+      <li>For bragging rights</li>
+    </ul></div>`;
+  }
+
   function titleFor(slide) {
-    return slide.type === 'intro' ? 'STRENGTH COMPETITION' : slide.type === 'division'
+    return slide.type === 'intro' ? 'STRENGTH COMPETITION' : slide.type === 'how' ? 'HOW TO SET A RECORD' : slide.type === 'rules' ? 'RULES & CRITERIA' : slide.type === 'division'
       ? `${label(slide.item.sex)} · ${slide.item.division.toUpperCase()}`
       : `${label(slide.sex)} · STRENGTH BOARD`;
   }
 
   function buildSlides() {
-    stage.innerHTML = slides.map((slide, index) => `<section class="slide${index === 0 ? ' active' : ''}" aria-label="${escapeHTML(titleFor(slide))}" ${index === 0 ? '' : 'aria-hidden="true"'}>${slide.type === 'intro' ? renderIntro() : slide.type === 'division' ? renderDivision(slide.item) : renderSummary(slide.sex)}</section>`).join('');
+    stage.innerHTML = slides.map((slide, index) => `<section class="slide${index === 0 ? ' active' : ''}" aria-label="${escapeHTML(titleFor(slide))}" ${index === 0 ? '' : 'aria-hidden="true"'}>${slide.type === 'intro' ? renderIntro() : slide.type === 'how' ? renderHow() : slide.type === 'rules' ? renderRules() : slide.type === 'division' ? renderDivision(slide.item) : renderSummary(slide.sex)}</section>`).join('');
     document.body.classList.toggle('single-slide', slides.length === 1);
     updateLabels();
   }
 
   function updateLabels() {
     const title = titleFor(slides[current]);
-    document.body.dataset.sex = slides[current].type === 'division' ? slides[current].item.sex : slides[current].type === 'intro' ? 'intro' : slides[current].sex;
+    document.body.dataset.sex = slides[current].type === 'division' ? slides[current].item.sex : slides[current].type === 'summary' ? slides[current].sex : 'intro';
+    document.body.dataset.slideKind = ['how', 'rules'].includes(slides[current].type) ? 'info' : slides[current].type;
     const heading = document.getElementById('slideTitle');
     heading.textContent = title;
     heading.classList.remove('title-enter');
@@ -105,7 +131,7 @@
 
   function schedule() {
     clearTimeout(timer);
-    if (!paused && slides.length > 1) timer = setTimeout(() => goTo(current + 1), INTERVAL_MS);
+    if (!paused && slides.length > 1) timer = setTimeout(() => goTo(current + 1), slideDuration());
   }
 
   function goTo(index) {
@@ -211,7 +237,7 @@
   updateClock();
   setInterval(updateClock, 30_000);
   ticker = setInterval(() => {
-    progressBar.style.transform = `scaleX(${paused ? 0 : Math.min(1, (Date.now() - startedAt) / INTERVAL_MS)})`;
+    progressBar.style.transform = `scaleX(${paused ? 0 : Math.min(1, (Date.now() - startedAt) / slideDuration())})`;
   }, 100);
   schedule();
 })();

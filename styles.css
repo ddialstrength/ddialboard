@@ -809,3 +809,80 @@ body.single-slide #pauseBtn { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .slide.active .intro-copy > * { animation: none; }
 }
+
+/* Competition guidance: silver arena panels sized for the gym TV. */
+body[data-slide-kind="info"] .topbar h1 { font-size: clamp(27px, 3.1vw, 60px); }
+.info-scene {
+  display: grid;
+  place-items: center;
+  padding: 2.2vh 5vw 5vh;
+}
+.info-steps, .info-rules {
+  position: relative;
+  z-index: 1;
+  width: min(85%, 1080px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.info-steps { display: grid; gap: clamp(7px, 1.25vh, 14px); }
+.info-steps li, .info-rules li {
+  color: #f7faff;
+  border: 1px solid rgba(218,234,247,.74);
+  background: linear-gradient(110deg, rgba(36,49,62,.96), rgba(6,9,15,.94) 34%, rgba(10,16,24,.93));
+  box-shadow: inset 0 1px rgba(255,255,255,.22), 0 0 12px rgba(188,218,242,.2), 0 12px 25px rgba(0,0,0,.55);
+  font-family: var(--records);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .022em;
+}
+.info-steps li {
+  min-height: clamp(65px, 9.7vh, 108px);
+  display: flex;
+  align-items: center;
+  gap: clamp(15px, 2.1vw, 32px);
+  padding: .7vh 2.3vw;
+  font-size: clamp(23px, 2.15vw, 42px);
+  line-height: 1.08;
+}
+.info-number {
+  flex: 0 0 auto;
+  color: #ffe2a3;
+  font: 700 clamp(30px, 3.3vw, 64px)/1 var(--display);
+}
+.info-rules {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2vh, 24px);
+}
+.info-rules li {
+  min-height: clamp(105px, 17vh, 180px);
+  display: grid;
+  place-items: center;
+  padding: 1.3vh 1.8vw;
+  text-align: center;
+  font-size: clamp(24px, 2.05vw, 40px);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.info-rules li span { color: #ffe2a3; }
+.info-rules li:last-child { color: #ffe2a3; }
+.slide.active .info-steps li, .slide.active .info-rules li { animation: infoReveal .45s ease-out both; }
+.slide.active .info-steps li:nth-child(2), .slide.active .info-rules li:nth-child(2) { animation-delay: .08s; }
+.slide.active .info-steps li:nth-child(3), .slide.active .info-rules li:nth-child(3) { animation-delay: .16s; }
+.slide.active .info-steps li:nth-child(4), .slide.active .info-rules li:nth-child(4) { animation-delay: .24s; }
+.slide.active .info-steps li:nth-child(5), .slide.active .info-rules li:nth-child(5) { animation-delay: .32s; }
+.slide.active .info-rules li:nth-child(6) { animation-delay: .4s; }
+@keyframes infoReveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 700px) {
+  body[data-slide-kind="info"] .topbar h1 { font-size: clamp(17px, 3.7vw, 25px); }
+  .info-scene { display: block; padding: 35px 5vw 50px; overflow: auto; }
+  .info-steps, .info-rules { width: 100%; }
+  .info-steps li { min-height: 85px; padding: 13px; gap: 13px; font-size: clamp(20px, 5.2vw, 29px); }
+  .info-number { font-size: clamp(29px, 7vw, 43px); }
+  .info-rules { grid-template-columns: 1fr; gap: 12px; }
+  .info-rules li { min-height: 105px; padding: 14px; font-size: clamp(22px, 5.5vw, 30px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide.active .info-steps li, .slide.active .info-rules li { animation: none; }
+}
