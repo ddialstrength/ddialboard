@@ -12,7 +12,12 @@ window.records = [
   },
   { sex: "female", division: "188 lb+", athletes: [] },
   { sex: "male", division: "Under 150 lb", athletes: [] },
-  { sex: "male", division: "150–187 lb", athletes: [] },
+  {
+    sex: "male", division: "150–187 lb",
+    athletes: [
+      { name: "Seth Jean-Charles", bench: 275, squat: null, row: null }
+    ]
+  },
   {
     sex: "male", division: "188–220 lb",
     athletes: [
