@@ -96,7 +96,7 @@
 
   function renderRules() {
     return `<div class="scene info-scene rules-scene"><ul class="info-rules">
-      <li>Bench Press <span aria-hidden="true">·</span> Squat <span aria-hidden="true">·</span> Chest-Supported Row</li>
+      <li><span class="rule-lifts">Bench Press <b aria-hidden="true">·</b> Squat <b aria-hidden="true">·</b> Chest-Supported Row</span></li>
       <li>Men’s and women’s bodyweight divisions</li>
       <li>Three attempts per official session</li>
       <li>Technique and safety supervised by floor instructors</li>

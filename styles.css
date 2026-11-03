@@ -811,6 +811,11 @@ body.single-slide #pauseBtn { display: none; }
 }
 
 /* Competition guidance: silver arena panels sized for the gym TV. */
+body[data-slide-kind="info"] {
+  background-image: url("assets/ddial-arena-poster.jpg");
+  --division-glow: rgba(200,220,235,.24);
+  --division-line: rgba(215,230,242,.24);
+}
 body[data-slide-kind="info"] .topbar h1 { font-size: clamp(27px, 3.1vw, 60px); }
 .info-scene {
   display: grid;
@@ -865,7 +870,7 @@ body[data-slide-kind="info"] .topbar h1 { font-size: clamp(27px, 3.1vw, 60px); }
   line-height: 1.12;
   text-wrap: balance;
 }
-.info-rules li span { color: #ffe2a3; }
+.info-rules li .rule-lifts b { color: #ffe2a3; }
 .info-rules li:last-child { color: #ffe2a3; }
 .slide.active .info-steps li, .slide.active .info-rules li { animation: infoReveal .45s ease-out both; }
 .slide.active .info-steps li:nth-child(2), .slide.active .info-rules li:nth-child(2) { animation-delay: .08s; }
