@@ -1,0 +1,107 @@
+:root { color-scheme: dark; font-family: Inter, Arial, sans-serif; background: #07090e; color: #fff; }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+.stage, .slide { position: absolute; inset: 0; }
+.slide { opacity: 0; visibility: hidden; transition: opacity .65s ease, visibility .65s; overflow: hidden; }
+.slide.active { opacity: 1; visibility: visible; }
+.logo { width: clamp(150px, 19vw, 300px); max-height: 18vh; object-fit: contain; object-position: left center; filter: drop-shadow(0 4px 18px #0009); }
+.eyebrow { display: block; font-weight: 800; font-size: clamp(15px, 1.3vw, 25px); letter-spacing: .24em; }
+h1 { font-family: 'Barlow Semi Condensed', Impact, sans-serif; font-weight: 900; line-height: .86; letter-spacing: -.04em; margin: .13em 0 .14em; }
+.gift-slide { background: transparent; z-index: 1; transition: visibility .65s; }
+.gift-slide.active { z-index: 2; }
+.gift-backdrop { position: absolute; inset: 0; background: radial-gradient(circle at 12% 76%, #501018 0, #1b151b 30%, transparent 58%), radial-gradient(circle at 68% 50%, #343a44 0, #171b22 46%, #07090e 85%); }
+.gift-slide::before { content: ''; position: absolute; z-index: 1; inset: 3.5%; border: 1px solid #d5dce5a8; box-shadow: inset 0 0 55px #c3c9d112, 0 0 22px #dfe8fa21; pointer-events: none; }
+.gift-slide::after { content: ''; position: absolute; z-index: 1; inset: 4.5%; border-left: 4px solid #8c1725; pointer-events: none; }
+.gift-ornament-hanger { position: absolute; z-index: 3; width: clamp(235px, 27vw, 530px); right: 0; top: -8vh; pointer-events: none; transform-origin: 50% 0; }
+.gift-decoration { display: block; width: 100%; filter: drop-shadow(0 18px 20px #000a); transform-origin: 50% 0; }
+.gift-inner { position: relative; width: min(92vw, 1800px); height: 100%; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 36fr) minmax(0, 64fr); align-items: center; gap: clamp(24px, 2vw, 44px); padding-block: 5.5vh 8vh; padding-inline: clamp(32px, 3vw, 72px); }
+.gift-heading { position: relative; height: 100%; display: flex; align-items: center; min-width: 0; }
+.gift-heading .logo { position: absolute; left: 0; top: 0; }
+.gift-copy { min-width: 0; }
+.gift-copy h1 { margin: .2em 0 .12em; line-height: 1; font-weight: 400; color: #f4f4f5; }
+.gift-word, .voucher-word { background: linear-gradient(180deg, #fff 0%, #d2d7dd 38%, #fff 57%, #939aa3 100%); color: transparent; -webkit-text-fill-color: transparent; background-clip: text; -webkit-background-clip: text; }
+.gift-word { display: block; width: fit-content; font: 400 clamp(70px, 7.2vw, 140px)/1 'Bodoni Moda', 'Times New Roman', serif; letter-spacing: .025em; margin-inline-start: .28em; }
+.voucher-word { display: block; width: fit-content; font: 400 clamp(75px, 7.4vw, 145px)/1.22 'Great Vibes', 'Brush Script MT', cursive; letter-spacing: 0; white-space: nowrap; margin-top: .10em; padding: 0 .15em .12em 0; }
+.gift-copy .eyebrow { color: #e54a57; font-family: 'Bodoni Moda', Georgia, serif; font-weight: 600; text-shadow: none; }
+.gift-support { margin-block-start: clamp(24px, 3vh, 40px); }
+.gift-copy p { font: 600 clamp(20px, 1.55vw, 32px)/1.3 'Bodoni Moda', Georgia, serif; max-width: 16em; margin: 0; }
+.gift-copy p + p { margin-block-start: .35em; }
+.voucher { width: 100%; height: auto; object-fit: contain; box-shadow: 0 30px 65px #000b, 0 0 0 2px #e3e6ed70, 0 0 35px #c7d2e141; transform: perspective(1400px) rotateY(-2deg); }
+/* 0–.5s sweep, .5s voucher fade, 5s full-screen hold, 2s shrink, then copy. */
+.gift-slide.gift-reveal .gift-backdrop { animation: giftSweep .5s ease-out both; }
+.gift-slide.gift-reveal::before, .gift-slide.gift-reveal::after { animation: giftFrameIn .5s ease-out 8s both; }
+.gift-slide.gift-reveal .voucher { position: relative; z-index: 2; animation: giftVoucherSequence 7.5s linear .5s both; }
+.gift-slide.gift-reveal .gift-copy { animation: giftTextIn 2s ease-out 8s both; }
+.gift-slide.gift-reveal .gift-heading .logo { animation: giftLogoIn 1s ease-out 10s both; }
+.gift-slide.gift-reveal .gift-ornament-hanger { animation: giftOrnamentDrop 2s cubic-bezier(.2,.7,.25,1) 10s both; }
+.gift-slide.gift-reveal .gift-decoration { animation: giftOrnamentSway 4s ease-in-out 12s infinite alternate; }
+@keyframes giftSweep { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+@keyframes giftFrameIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes giftVoucherSequence {
+  0% { opacity: 0; transform: translate(var(--voucher-start-x), var(--voucher-start-y)) scale(var(--voucher-start-scale)); animation-timing-function: ease-out; }
+  6.6667% { opacity: 1; transform: translate(var(--voucher-start-x), var(--voucher-start-y)) scale(var(--voucher-start-scale)); animation-timing-function: linear; }
+  73.3333% { opacity: 1; transform: translate(var(--voucher-start-x), var(--voucher-start-y)) scale(var(--voucher-start-scale)); animation-timing-function: cubic-bezier(.22,.65,.18,1); }
+  100% { opacity: 1; transform: perspective(1400px) rotateY(-2deg); }
+}
+@keyframes giftTextIn { from { opacity: 0; transform: translateX(-55px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes giftLogoIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes giftOrnamentDrop { from { opacity: 0; transform: translateY(-100%); } to { opacity: 1; transform: translateY(0); } }
+@keyframes giftOrnamentSway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+.carnival-slide { background: #090916; }
+.carnival-photo { position: absolute; inset: 0; background: url('assets/carnival-road-user.webp') center 44% / cover no-repeat; transform: scale(1.02); }
+.carnival-shade { position: absolute; inset: 0; background: linear-gradient(90deg, #060815ed 0%, #0a0a1ac5 19%, #11112b70 31%, #11102e24 41%, transparent 50%), linear-gradient(0deg, #0808145c, transparent 30%); }
+.carnival-inner { position: relative; height: 100%; padding-block: 4vh 5vh; padding-inline: max(5vw, env(safe-area-inset-left)) max(5vw, env(safe-area-inset-right)); display: flex; flex-direction: column; justify-content: space-between; }
+.carnival-inner .logo { max-height: 12vh; }
+.carnival-copy { width: min(49vw, 900px); display: grid; gap: clamp(18px, 2.5vh, 32px); }
+.carnival-hero { display: grid; gap: clamp(12px, 1.5vh, 20px); }
+.carnival-details { display: grid; gap: clamp(4px, .7vh, 10px); }
+.carnival-eyebrow { color: #ffe000; text-shadow: none; }
+.carnival-copy h1 { font-family: Teko, Impact, sans-serif; font-size: clamp(74px, 8.4vw, 162px); line-height: .75; letter-spacing: .005em; text-shadow: none; margin: 0; }
+.carnival-copy h1 span { color: #fff; }
+.carnival-copy h1 strong { font-weight: 700; background: linear-gradient(100deg, #00eaff 0%, #00fac8 29%, #ffe000 57%, #ff009e 85%); color: transparent; -webkit-text-fill-color: transparent; background-clip: text; -webkit-background-clip: text; text-shadow: none; }
+.carnival-details > p { font: 700 clamp(20px, 1.7vw, 34px)/1.14 Rajdhani, Arial, sans-serif; margin: 0; }
+.countdown { display: flex; align-items: baseline; gap: clamp(12px, 1.5vw, 30px); white-space: nowrap; }
+.countdown b { display: block; font-family: Teko, Impact, sans-serif; font-size: clamp(160px, 22vw, 390px); font-weight: 700; line-height: .7; letter-spacing: .015em; background: linear-gradient(110deg, #ff009e 0%, #ff5432 17%, #ffe000 35%, #00f0a4 54%, #00d9ff 73%, #a844ff 100%); color: transparent; -webkit-text-fill-color: transparent; background-clip: text; -webkit-background-clip: text; text-shadow: none; font-variant-numeric: tabular-nums; }
+.countdown span { display: block; font: 700 clamp(23px, 2.4vw, 48px)/1 Rajdhani, Arial, sans-serif; letter-spacing: .025em; color: #fff; white-space: normal; max-width: 6em; }
+.carnival-copy .date-line { color: #ffe000; font-size: clamp(20px, 1.65vw, 34px); letter-spacing: .05em; }
+.date-line i { font-style: normal; color: #fff; }
+.carnival-copy .cta { font-family: Rajdhani, Arial, sans-serif; font-size: clamp(23px, 2.2vw, 43px); letter-spacing: .015em; border-inline-start: 5px solid #00edfb; padding-inline-start: .55em; margin-block-start: clamp(12px, 1.5vh, 22px); }
+.controls { position: fixed; z-index: 5; inset-inline-end: max(2vw, env(safe-area-inset-right)); inset-block-end: max(2.5vh, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 5px; padding: 5px; border: 1px solid #ffffff45; background: #080c16c9; border-radius: 99px; backdrop-filter: blur(8px); }
+.controls button { background: transparent; color: #fff; border: 0; font: 700 26px/1 Inter, Arial, sans-serif; width: 42px; height: 42px; cursor: pointer; border-radius: 50%; }
+.controls button:hover, .controls button:focus-visible { background: #fff3; outline: 2px solid #fff; }
+.controls span { min-width: 55px; text-align: center; font-weight: 800; }
+@media (max-width: 900px) {
+  .gift-inner { display: flex; flex-direction: column; justify-content: center; padding-block: 3vh 12vh; padding-inline: 5vw; gap: 3vh; }
+  .gift-heading { height: auto; width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 2vh; }
+  .gift-heading .logo { position: static; }
+  .logo { width: min(46vw, 200px); max-height: 11vh; }
+  .gift-word { font-size: clamp(52px, 12vw, 86px); }
+  .voucher-word { font-size: clamp(65px, 14vw, 105px); }
+  .gift-copy p { margin: .5em 0; }
+  .gift-ornament-hanger { width: min(50vw, 350px); top: -3vh; right: -3vw; }
+  .voucher { max-height: 48vh; }
+  .carnival-photo { background-position: 58% center; }
+  .carnival-shade { background: linear-gradient(90deg, #080a17dd 0%, #0a0a1982 42%, transparent 75%), linear-gradient(0deg, #0708176b, transparent 38%); }
+  .carnival-inner { padding-block: 4vh 12vh; padding-inline: 5vw; }
+  .carnival-copy { width: min(88vw, 600px); }
+  .carnival-copy h1 { font-size: clamp(65px, 13vw, 110px); }
+  .countdown { margin: 0 0 1vh; }
+  .countdown b { font-size: clamp(115px, 30vw, 220px); }
+  .countdown span { font-size: clamp(15px, 3vw, 23px); }
+}
+@media (max-height: 700px) {
+  .carnival-inner { padding-block: 3vh 8vh; }
+  .carnival-copy { gap: 12px; }
+  .carnival-hero { gap: 8px; }
+  .carnival-copy h1 { font-size: clamp(56px, 10vh, 96px); }
+  .countdown b { font-size: clamp(100px, 22vh, 190px); }
+  .carnival-details { gap: 3px; }
+  .carnival-copy .cta { margin-block-start: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .slide, .carnival-photo { transition: none; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .gift-slide.gift-reveal .gift-backdrop, .gift-slide.gift-reveal::before, .gift-slide.gift-reveal::after,
+  .gift-slide.gift-reveal .voucher, .gift-slide.gift-reveal .gift-copy,
+  .gift-slide.gift-reveal .gift-heading .logo, .gift-slide.gift-reveal .gift-ornament-hanger,
+  .gift-slide.gift-reveal .gift-decoration { animation: none; }
+}
