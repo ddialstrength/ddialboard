@@ -1,4 +1,4 @@
-:root { color-scheme: dark; font-family: Inter, Arial, sans-serif; background: #07090e; color: #fff; }
+:root { color-scheme: dark; font-family: Inter, Arial, sans-serif; background: #07090e; color: #fff; --metallic-silver: linear-gradient(180deg, #fff 0%, #e3e8ed 26%, #aeb8c2 48%, #f8fbff 66%, #8e99a5 100%); }
 * { box-sizing: border-box; }
 html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
 .stage, .slide { position: absolute; inset: 0; }
@@ -19,9 +19,9 @@ h1 { font-family: 'Barlow Semi Condensed', Impact, sans-serif; font-weight: 900;
 .gift-heading .logo { position: absolute; left: 0; top: 0; }
 .gift-copy { min-width: 0; }
 .gift-copy h1 { margin: .2em 0 .12em; line-height: 1; font-weight: 400; color: #f4f4f5; }
-.gift-word, .voucher-word { background: linear-gradient(180deg, #fff 0%, #d2d7dd 38%, #fff 57%, #939aa3 100%); color: transparent; -webkit-text-fill-color: transparent; background-clip: text; -webkit-background-clip: text; }
+.gift-word, .voucher-word { background: var(--metallic-silver); color: transparent; -webkit-text-fill-color: transparent; background-clip: text; -webkit-background-clip: text; }
 .gift-word { display: block; width: fit-content; font: 400 clamp(70px, 7.2vw, 140px)/1 'Bodoni Moda', 'Times New Roman', serif; letter-spacing: .025em; margin-inline-start: .28em; }
-.voucher-word { display: block; width: fit-content; font: 400 clamp(75px, 7.4vw, 145px)/1.22 'Great Vibes', 'Brush Script MT', cursive; letter-spacing: 0; white-space: nowrap; margin-top: .10em; padding: 0 .15em .12em 0; }
+.voucher-word { display: block; width: fit-content; font: 400 clamp(75px, 7.4vw, 145px)/1.32 'Great Vibes', 'Brush Script MT', cursive; letter-spacing: 0; white-space: nowrap; margin-top: -.02em; padding: .18em .18em .14em .08em; }
 .gift-copy .eyebrow { color: #e54a57; font-family: 'Bodoni Moda', Georgia, serif; font-weight: 600; text-shadow: none; }
 .gift-support { margin-block-start: clamp(24px, 3vh, 40px); }
 .gift-copy p { font: 600 clamp(20px, 1.55vw, 32px)/1.3 'Bodoni Moda', Georgia, serif; max-width: 16em; margin: 0; }
@@ -56,12 +56,12 @@ h1 { font-family: 'Barlow Semi Condensed', Impact, sans-serif; font-weight: 900;
 .carnival-hero { display: grid; gap: clamp(12px, 1.5vh, 20px); }
 .carnival-details { display: grid; gap: clamp(4px, .7vh, 10px); }
 .carnival-eyebrow { color: #ffe000; text-shadow: none; }
-.carnival-copy h1 { font-family: Teko, Impact, sans-serif; font-size: clamp(74px, 8.4vw, 162px); line-height: .75; letter-spacing: .005em; text-shadow: none; margin: 0; }
+.carnival-copy h1 { font-family: 'Barlow Condensed', Impact, sans-serif; font-size: clamp(74px, 8.4vw, 162px); font-weight: 900; line-height: .88; letter-spacing: .005em; text-shadow: none; margin: 0; }
 .carnival-copy h1 span { color: #fff; }
-.carnival-copy h1 strong { font-weight: 700; background: linear-gradient(100deg, #00eaff 0%, #00fac8 29%, #ffe000 57%, #ff009e 85%); color: transparent; -webkit-text-fill-color: transparent; background-clip: text; -webkit-background-clip: text; text-shadow: none; }
+.carnival-copy h1 strong { font-weight: 900; background: var(--metallic-silver); color: transparent; -webkit-text-fill-color: transparent; background-clip: text; -webkit-background-clip: text; text-shadow: none; }
 .carnival-details > p { font: 700 clamp(20px, 1.7vw, 34px)/1.14 Rajdhani, Arial, sans-serif; margin: 0; }
 .countdown { display: flex; align-items: baseline; gap: clamp(12px, 1.5vw, 30px); white-space: nowrap; }
-.countdown b { display: block; font-family: Teko, Impact, sans-serif; font-size: clamp(160px, 22vw, 390px); font-weight: 700; line-height: .7; letter-spacing: .015em; background: linear-gradient(110deg, #ff009e 0%, #ff5432 17%, #ffe000 35%, #00f0a4 54%, #00d9ff 73%, #a844ff 100%); color: transparent; -webkit-text-fill-color: transparent; background-clip: text; -webkit-background-clip: text; text-shadow: none; font-variant-numeric: tabular-nums; }
+.countdown b { display: block; font-family: 'Barlow Condensed', Impact, sans-serif; font-size: clamp(160px, 22vw, 390px); font-weight: 900; line-height: 1; letter-spacing: -.025em; padding-block: .06em .02em; background: var(--metallic-silver); color: transparent; -webkit-text-fill-color: transparent; background-clip: text; -webkit-background-clip: text; text-shadow: none; font-variant-numeric: tabular-nums; }
 .countdown span { display: block; font: 700 clamp(23px, 2.4vw, 48px)/1 Rajdhani, Arial, sans-serif; letter-spacing: .025em; color: #fff; white-space: normal; max-width: 6em; }
 .carnival-copy .date-line { color: #ffe000; font-size: clamp(20px, 1.65vw, 34px); letter-spacing: .05em; }
 .date-line i { font-style: normal; color: #fff; }
