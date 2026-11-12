@@ -105,3 +105,7 @@ h1 { font-family: 'Barlow Semi Condensed', Impact, sans-serif; font-weight: 900;
   .gift-slide.gift-reveal .gift-heading .logo, .gift-slide.gift-reveal .gift-ornament-hanger,
   .gift-slide.gift-reveal .gift-decoration { animation: none; }
 }
+
+/* The approved gift artwork is displayed as a single, static image. */
+.gift-slide { background: #07090e; transition: none; }
+.gift-image { display: block; width: 100%; height: 100%; object-fit: contain; }

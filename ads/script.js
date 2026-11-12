@@ -5,34 +5,12 @@
   let current = 0;
   let paused = false;
   let timer;
-  const giftSlide = document.querySelector('.gift-slide');
-  const voucher = giftSlide.querySelector('.voucher');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  function revealGift() {
-    giftSlide.classList.remove('gift-reveal');
-    if (reducedMotion.matches) return;
-    // Place the first frame of the voucher over the screen, then shrink to its layout slot.
-    const rect = voucher.getBoundingClientRect();
-    const coverScale = Math.max(window.innerWidth / rect.width, window.innerHeight / rect.height);
-    // Keep the five-second feature view about 30% smaller and inside the arena frame.
-    const scale = Math.min(coverScale * .7, window.innerWidth * .88 / rect.width, window.innerHeight * .84 / rect.height);
-    giftSlide.style.setProperty('--voucher-start-x', `${window.innerWidth / 2 - (rect.left + rect.width / 2)}px`);
-    giftSlide.style.setProperty('--voucher-start-y', `${window.innerHeight / 2 - (rect.top + rect.height / 2)}px`);
-    giftSlide.style.setProperty('--voucher-start-scale', String(scale));
-    // Restart the sequence each time rotation returns to this slide.
-    void giftSlide.offsetWidth;
-    giftSlide.classList.add('gift-reveal');
-  }
-
   function show(index) {
     current = (index + slides.length) % slides.length;
     slides.forEach((slide, i) => {
       slide.classList.toggle('active', i === current);
       slide.setAttribute('aria-hidden', String(i !== current));
     });
-    if (slides[current] === giftSlide) revealGift();
-    else giftSlide.classList.remove('gift-reveal');
     document.getElementById('position').textContent = `${current + 1} / ${slides.length}`;
     schedule();
   }
