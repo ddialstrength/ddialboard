@@ -109,3 +109,4 @@ h1 { font-family: 'Barlow Semi Condensed', Impact, sans-serif; font-weight: 900;
 /* The approved gift artwork is displayed as a single, static image. */
 .gift-slide { background: #07090e; transition: none; }
 .gift-image { display: block; width: 100%; height: 100%; object-fit: contain; }
+.gift-slide::before, .gift-slide::after { display: none; }
